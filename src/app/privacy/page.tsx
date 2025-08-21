@@ -48,47 +48,111 @@ export default function Privacy() {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8 }}
-                className="prose prose-lg max-w-none"
+                className="space-y-12"
               >
-                <h2>1. Information We Collect</h2>
-                <p>
-                  We collect information you provide directly to us, such as when you create an account, contact us, or use our services. This may include your name, email address, phone number, and other contact information.
-                </p>
+                {/* Section 1 */}
+                <div className="bg-gradient-to-r from-gray-50 to-white p-8 rounded-2xl border border-gray-100 shadow-sm">
+                  <div className="flex items-center mb-6">
+                    <div className="w-12 h-12 bg-gradient-to-r from-rosewood-500 to-carmine-500 rounded-lg flex items-center justify-center mr-4">
+                      <span className="text-white font-bold text-lg">1</span>
+                    </div>
+                    <h2 className="text-3xl font-bold text-gray-900">Information We Collect</h2>
+                  </div>
+                  <p className="text-lg text-gray-700 leading-relaxed">
+                    We collect information you provide directly to us, such as when you create an account, contact us, or use our services. This may include your name, email address, phone number, and other contact information.
+                  </p>
+                </div>
 
-                <h2>2. How We Use Your Information</h2>
-                <p>
-                  We use the information we collect to provide, maintain, and improve our services, communicate with you, and develop new features and services.
-                </p>
+                {/* Section 2 */}
+                <div className="bg-gradient-to-r from-gray-50 to-white p-8 rounded-2xl border border-gray-100 shadow-sm">
+                  <div className="flex items-center mb-6">
+                    <div className="w-12 h-12 bg-gradient-to-r from-carmine-500 to-auburn-500 rounded-lg flex items-center justify-center mr-4">
+                      <span className="text-white font-bold text-lg">2</span>
+                    </div>
+                    <h2 className="text-3xl font-bold text-gray-900">How We Use Your Information</h2>
+                  </div>
+                  <p className="text-lg text-gray-700 leading-relaxed">
+                    We use the information we collect to provide, maintain, and improve our services, communicate with you, and develop new features and services.
+                  </p>
+                </div>
 
-                <h2>3. Information Sharing</h2>
-                <p>
-                  We do not sell, trade, or otherwise transfer your personal information to third parties without your consent, except as described in this privacy policy.
-                </p>
+                {/* Section 3 */}
+                <div className="bg-gradient-to-r from-gray-50 to-white p-8 rounded-2xl border border-gray-100 shadow-sm">
+                  <div className="flex items-center mb-6">
+                    <div className="w-12 h-12 bg-gradient-to-r from-auburn-500 to-burgundy-500 rounded-lg flex items-center justify-center mr-4">
+                      <span className="text-white font-bold text-lg">3</span>
+                    </div>
+                    <h2 className="text-3xl font-bold text-gray-900">Information Sharing</h2>
+                  </div>
+                  <p className="text-lg text-gray-700 leading-relaxed">
+                    We do not sell, trade, or otherwise transfer your personal information to third parties without your consent, except as described in this privacy policy.
+                  </p>
+                </div>
 
-                <h2>4. Data Security</h2>
-                <p>
-                  We implement appropriate security measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction.
-                </p>
+                {/* Section 4 */}
+                <div className="bg-gradient-to-r from-gray-50 to-white p-8 rounded-2xl border border-gray-100 shadow-sm">
+                  <div className="flex items-center mb-6">
+                    <div className="w-12 h-12 bg-gradient-to-r from-burgundy-500 to-cardinal-500 rounded-lg flex items-center justify-center mr-4">
+                      <span className="text-white font-bold text-lg">4</span>
+                    </div>
+                    <h2 className="text-3xl font-bold text-gray-900">Data Security</h2>
+                  </div>
+                  <p className="text-lg text-gray-700 leading-relaxed">
+                    We implement appropriate security measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction.
+                  </p>
+                </div>
 
-                <h2>5. Cookies and Tracking</h2>
-                <p>
-                  We use cookies and similar tracking technologies to enhance your experience on our website and analyze usage patterns.
-                </p>
+                {/* Section 5 */}
+                <div className="bg-gradient-to-r from-gray-50 to-white p-8 rounded-2xl border border-gray-100 shadow-sm">
+                  <div className="flex items-center mb-6">
+                    <div className="w-12 h-12 bg-gradient-to-r from-cardinal-500 to-rosewood-500 rounded-lg flex items-center justify-center mr-4">
+                      <span className="text-white font-bold text-lg">5</span>
+                    </div>
+                    <h2 className="text-3xl font-bold text-gray-900">Cookies and Tracking</h2>
+                  </div>
+                  <p className="text-lg text-gray-700 leading-relaxed">
+                    We use cookies and similar tracking technologies to enhance your experience on our website and analyze usage patterns.
+                  </p>
+                </div>
 
-                <h2>6. Your Rights</h2>
-                <p>
-                  You have the right to access, update, or delete your personal information. You may also opt out of certain communications from us.
-                </p>
+                {/* Section 6 */}
+                <div className="bg-gradient-to-r from-gray-50 to-white p-8 rounded-2xl border border-gray-100 shadow-sm">
+                  <div className="flex items-center mb-6">
+                    <div className="w-12 h-12 bg-gradient-to-r from-rosewood-500 to-carmine-500 rounded-lg flex items-center justify-center mr-4">
+                      <span className="text-white font-bold text-lg">6</span>
+                    </div>
+                    <h2 className="text-3xl font-bold text-gray-900">Your Rights</h2>
+                  </div>
+                  <p className="text-lg text-gray-700 leading-relaxed">
+                    You have the right to access, update, or delete your personal information. You may also opt out of certain communications from us.
+                  </p>
+                </div>
 
-                <h2>7. Changes to This Policy</h2>
-                <p>
-                  We may update this privacy policy from time to time. We will notify you of any changes by posting the new policy on this page.
-                </p>
+                {/* Section 7 */}
+                <div className="bg-gradient-to-r from-gray-50 to-white p-8 rounded-2xl border border-gray-100 shadow-sm">
+                  <div className="flex items-center mb-6">
+                    <div className="w-12 h-12 bg-gradient-to-r from-carmine-500 to-auburn-500 rounded-lg flex items-center justify-center mr-4">
+                      <span className="text-white font-bold text-lg">7</span>
+                    </div>
+                    <h2 className="text-3xl font-bold text-gray-900">Changes to This Policy</h2>
+                  </div>
+                  <p className="text-lg text-gray-700 leading-relaxed">
+                    We may update this privacy policy from time to time. We will notify you of any changes by posting the new policy on this page.
+                  </p>
+                </div>
 
-                <h2>8. Contact Us</h2>
-                <p>
-                  If you have any questions about this privacy policy, please contact us using the information provided below.
-                </p>
+                {/* Section 8 */}
+                <div className="bg-gradient-to-r from-gray-50 to-white p-8 rounded-2xl border border-gray-100 shadow-sm">
+                  <div className="flex items-center mb-6">
+                    <div className="w-12 h-12 bg-gradient-to-r from-auburn-500 to-burgundy-500 rounded-lg flex items-center justify-center mr-4">
+                      <span className="text-white font-bold text-lg">8</span>
+                    </div>
+                    <h2 className="text-3xl font-bold text-gray-900">Contact Us</h2>
+                  </div>
+                  <p className="text-lg text-gray-700 leading-relaxed">
+                    If you have any questions about this privacy policy, please contact us using the information provided below.
+                  </p>
+                </div>
               </motion.div>
 
               {/* Contact Information */}
@@ -96,28 +160,53 @@ export default function Privacy() {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
-                className="mt-16 p-8 bg-gradient-to-br from-gray-50 to-white rounded-2xl border border-gray-200"
+                className="mt-16 p-8 bg-gradient-to-br from-rosewood-50 to-carmine-50 rounded-2xl border border-rosewood-200 shadow-lg"
               >
-                <h3 className="text-2xl font-bold text-gray-900 mb-6">Contact Us</h3>
-                <p className="text-gray-600 mb-6">
+                <div className="flex items-center mb-6">
+                  <div className="w-12 h-12 bg-gradient-to-r from-rosewood-500 to-carmine-500 rounded-lg flex items-center justify-center mr-4">
+                    <Eye className="w-6 h-6 text-white" />
+                  </div>
+                  <h3 className="text-3xl font-bold text-gray-900">Contact Us</h3>
+                </div>
+                <p className="text-lg text-gray-700 mb-8 leading-relaxed">
                   If you have any questions about our Privacy Policy, please contact us:
                 </p>
                 <div className="grid md:grid-cols-2 gap-6">
-                  <div className="flex items-center space-x-3">
-                    <Eye className="w-5 h-5 text-rosewood-600" />
-                    <span className="text-gray-700">Email: privacy@devcraftstudios.com</span>
+                  <div className="flex items-center space-x-4 p-4 bg-white rounded-xl border border-gray-100">
+                    <div className="w-10 h-10 bg-gradient-to-r from-rosewood-500 to-carmine-500 rounded-lg flex items-center justify-center">
+                      <Eye className="w-5 h-5 text-white" />
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-500 font-medium">Email</p>
+                      <p className="text-gray-900 font-semibold">privacy@devcraftstudios.com</p>
+                    </div>
                   </div>
-                  <div className="flex items-center space-x-3">
-                    <Lock className="w-5 h-5 text-carmine-600" />
-                    <span className="text-gray-700">Phone: +1 (555) 123-4567</span>
+                  <div className="flex items-center space-x-4 p-4 bg-white rounded-xl border border-gray-100">
+                    <div className="w-10 h-10 bg-gradient-to-r from-carmine-500 to-auburn-500 rounded-lg flex items-center justify-center">
+                      <Lock className="w-5 h-5 text-white" />
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-500 font-medium">Phone</p>
+                      <p className="text-gray-900 font-semibold">+1 (555) 123-4567</p>
+                    </div>
                   </div>
-                  <div className="flex items-center space-x-3">
-                    <Users className="w-5 h-5 text-auburn-600" />
-                    <span className="text-gray-700">Address: San Francisco, CA</span>
+                  <div className="flex items-center space-x-4 p-4 bg-white rounded-xl border border-gray-100">
+                    <div className="w-10 h-10 bg-gradient-to-r from-auburn-500 to-burgundy-500 rounded-lg flex items-center justify-center">
+                      <Users className="w-5 h-5 text-white" />
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-500 font-medium">Address</p>
+                      <p className="text-gray-900 font-semibold">San Francisco, CA</p>
+                    </div>
                   </div>
-                  <div className="flex items-center space-x-3">
-                    <Calendar className="w-5 h-5 text-burgundy-600" />
-                    <span className="text-gray-700">Last updated: December 2024</span>
+                  <div className="flex items-center space-x-4 p-4 bg-white rounded-xl border border-gray-100">
+                    <div className="w-10 h-10 bg-gradient-to-r from-burgundy-500 to-cardinal-500 rounded-lg flex items-center justify-center">
+                      <Calendar className="w-5 h-5 text-white" />
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-500 font-medium">Last Updated</p>
+                      <p className="text-gray-900 font-semibold">December 2024</p>
+                    </div>
                   </div>
                 </div>
               </motion.div>

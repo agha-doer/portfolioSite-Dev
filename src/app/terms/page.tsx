@@ -48,47 +48,111 @@ export default function Terms() {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8 }}
-                className="prose prose-lg max-w-none"
+                className="space-y-12"
               >
-                <h2>1. Acceptance of Terms</h2>
-                <p>
-                  By accessing and using DevCraft Studios' services, you accept and agree to be bound by the terms and provision of this agreement.
-                </p>
+                {/* Section 1 */}
+                <div className="bg-gradient-to-r from-gray-50 to-white p-8 rounded-2xl border border-gray-100 shadow-sm">
+                  <div className="flex items-center mb-6">
+                    <div className="w-12 h-12 bg-gradient-to-r from-rosewood-500 to-carmine-500 rounded-lg flex items-center justify-center mr-4">
+                      <span className="text-white font-bold text-lg">1</span>
+                    </div>
+                    <h2 className="text-3xl font-bold text-gray-900">Acceptance of Terms</h2>
+                  </div>
+                  <p className="text-lg text-gray-700 leading-relaxed">
+                    By accessing and using DevCraft Studios' services, you accept and agree to be bound by the terms and provision of this agreement.
+                  </p>
+                </div>
 
-                <h2>2. Use License</h2>
-                <p>
-                  Permission is granted to temporarily download one copy of the materials (information or software) on DevCraft Studios' website for personal, non-commercial transitory viewing only.
-                </p>
+                {/* Section 2 */}
+                <div className="bg-gradient-to-r from-gray-50 to-white p-8 rounded-2xl border border-gray-100 shadow-sm">
+                  <div className="flex items-center mb-6">
+                    <div className="w-12 h-12 bg-gradient-to-r from-carmine-500 to-auburn-500 rounded-lg flex items-center justify-center mr-4">
+                      <span className="text-white font-bold text-lg">2</span>
+                    </div>
+                    <h2 className="text-3xl font-bold text-gray-900">Use License</h2>
+                  </div>
+                  <p className="text-lg text-gray-700 leading-relaxed">
+                    Permission is granted to temporarily download one copy of the materials (information or software) on DevCraft Studios' website for personal, non-commercial transitory viewing only.
+                  </p>
+                </div>
 
-                <h2>3. Disclaimer</h2>
-                <p>
-                  The materials on DevCraft Studios' website are provided on an 'as is' basis. DevCraft Studios makes no warranties, expressed or implied, and hereby disclaims and negates all other warranties including without limitation, implied warranties or conditions of merchantability, fitness for a particular purpose, or non-infringement of intellectual property or other violation of rights.
-                </p>
+                {/* Section 3 */}
+                <div className="bg-gradient-to-r from-gray-50 to-white p-8 rounded-2xl border border-gray-100 shadow-sm">
+                  <div className="flex items-center mb-6">
+                    <div className="w-12 h-12 bg-gradient-to-r from-auburn-500 to-burgundy-500 rounded-lg flex items-center justify-center mr-4">
+                      <span className="text-white font-bold text-lg">3</span>
+                    </div>
+                    <h2 className="text-3xl font-bold text-gray-900">Disclaimer</h2>
+                  </div>
+                  <p className="text-lg text-gray-700 leading-relaxed">
+                    The materials on DevCraft Studios' website are provided on an 'as is' basis. DevCraft Studios makes no warranties, expressed or implied, and hereby disclaims and negates all other warranties including without limitation, implied warranties or conditions of merchantability, fitness for a particular purpose, or non-infringement of intellectual property or other violation of rights.
+                  </p>
+                </div>
 
-                <h2>4. Limitations</h2>
-                <p>
-                  In no event shall DevCraft Studios or its suppliers be liable for any damages (including, without limitation, damages for loss of data or profit, or due to business interruption) arising out of the use or inability to use the materials on DevCraft Studios' website.
-                </p>
+                {/* Section 4 */}
+                <div className="bg-gradient-to-r from-gray-50 to-white p-8 rounded-2xl border border-gray-100 shadow-sm">
+                  <div className="flex items-center mb-6">
+                    <div className="w-12 h-12 bg-gradient-to-r from-burgundy-500 to-cardinal-500 rounded-lg flex items-center justify-center mr-4">
+                      <span className="text-white font-bold text-lg">4</span>
+                    </div>
+                    <h2 className="text-3xl font-bold text-gray-900">Limitations</h2>
+                  </div>
+                  <p className="text-lg text-gray-700 leading-relaxed">
+                    In no event shall DevCraft Studios or its suppliers be liable for any damages (including, without limitation, damages for loss of data or profit, or due to business interruption) arising out of the use or inability to use the materials on DevCraft Studios' website.
+                  </p>
+                </div>
 
-                <h2>5. Accuracy of Materials</h2>
-                <p>
-                  The materials appearing on DevCraft Studios' website could include technical, typographical, or photographic errors. DevCraft Studios does not warrant that any of the materials on its website are accurate, complete or current.
-                </p>
+                {/* Section 5 */}
+                <div className="bg-gradient-to-r from-gray-50 to-white p-8 rounded-2xl border border-gray-100 shadow-sm">
+                  <div className="flex items-center mb-6">
+                    <div className="w-12 h-12 bg-gradient-to-r from-cardinal-500 to-rosewood-500 rounded-lg flex items-center justify-center mr-4">
+                      <span className="text-white font-bold text-lg">5</span>
+                    </div>
+                    <h2 className="text-3xl font-bold text-gray-900">Accuracy of Materials</h2>
+                  </div>
+                  <p className="text-lg text-gray-700 leading-relaxed">
+                    The materials appearing on DevCraft Studios' website could include technical, typographical, or photographic errors. DevCraft Studios does not warrant that any of the materials on its website are accurate, complete or current.
+                  </p>
+                </div>
 
-                <h2>6. Links</h2>
-                <p>
-                  DevCraft Studios has not reviewed all of the sites linked to its website and is not responsible for the contents of any such linked site. The inclusion of any link does not imply endorsement by DevCraft Studios of the site.
-                </p>
+                {/* Section 6 */}
+                <div className="bg-gradient-to-r from-gray-50 to-white p-8 rounded-2xl border border-gray-100 shadow-sm">
+                  <div className="flex items-center mb-6">
+                    <div className="w-12 h-12 bg-gradient-to-r from-rosewood-500 to-carmine-500 rounded-lg flex items-center justify-center mr-4">
+                      <span className="text-white font-bold text-lg">6</span>
+                    </div>
+                    <h2 className="text-3xl font-bold text-gray-900">Links</h2>
+                  </div>
+                  <p className="text-lg text-gray-700 leading-relaxed">
+                    DevCraft Studios has not reviewed all of the sites linked to its website and is not responsible for the contents of any such linked site. The inclusion of any link does not imply endorsement by DevCraft Studios of the site.
+                  </p>
+                </div>
 
-                <h2>7. Modifications</h2>
-                <p>
-                  DevCraft Studios may revise these terms of service for its website at any time without notice. By using this website you are agreeing to be bound by the then current version of these Terms of Service.
-                </p>
+                {/* Section 7 */}
+                <div className="bg-gradient-to-r from-gray-50 to-white p-8 rounded-2xl border border-gray-100 shadow-sm">
+                  <div className="flex items-center mb-6">
+                    <div className="w-12 h-12 bg-gradient-to-r from-carmine-500 to-auburn-500 rounded-lg flex items-center justify-center mr-4">
+                      <span className="text-white font-bold text-lg">7</span>
+                    </div>
+                    <h2 className="text-3xl font-bold text-gray-900">Modifications</h2>
+                  </div>
+                  <p className="text-lg text-gray-700 leading-relaxed">
+                    DevCraft Studios may revise these terms of service for its website at any time without notice. By using this website you are agreeing to be bound by the then current version of these Terms of Service.
+                  </p>
+                </div>
 
-                <h2>8. Governing Law</h2>
-                <p>
-                  These terms and conditions are governed by and construed in accordance with the laws and you irrevocably submit to the exclusive jurisdiction of the courts in that State or location.
-                </p>
+                {/* Section 8 */}
+                <div className="bg-gradient-to-r from-gray-50 to-white p-8 rounded-2xl border border-gray-100 shadow-sm">
+                  <div className="flex items-center mb-6">
+                    <div className="w-12 h-12 bg-gradient-to-r from-auburn-500 to-burgundy-500 rounded-lg flex items-center justify-center mr-4">
+                      <span className="text-white font-bold text-lg">8</span>
+                    </div>
+                    <h2 className="text-3xl font-bold text-gray-900">Governing Law</h2>
+                  </div>
+                  <p className="text-lg text-gray-700 leading-relaxed">
+                    These terms and conditions are governed by and construed in accordance with the laws and you irrevocably submit to the exclusive jurisdiction of the courts in that State or location.
+                  </p>
+                </div>
               </motion.div>
 
               {/* Contact Information */}
@@ -96,24 +160,44 @@ export default function Terms() {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
-                className="mt-16 p-8 bg-gradient-to-br from-gray-50 to-white rounded-2xl border border-gray-200"
+                className="mt-16 p-8 bg-gradient-to-br from-rosewood-50 to-carmine-50 rounded-2xl border border-rosewood-200 shadow-lg"
               >
-                <h3 className="text-2xl font-bold text-gray-900 mb-6">Contact Us</h3>
-                <p className="text-gray-600 mb-6">
+                <div className="flex items-center mb-6">
+                  <div className="w-12 h-12 bg-gradient-to-r from-rosewood-500 to-carmine-500 rounded-lg flex items-center justify-center mr-4">
+                    <Shield className="w-6 h-6 text-white" />
+                  </div>
+                  <h3 className="text-3xl font-bold text-gray-900">Contact Us</h3>
+                </div>
+                <p className="text-lg text-gray-700 mb-8 leading-relaxed">
                   If you have any questions about these Terms of Service, please contact us:
                 </p>
                 <div className="grid md:grid-cols-2 gap-6">
-                  <div className="flex items-center space-x-3">
-                    <Shield className="w-5 h-5 text-rosewood-600" />
-                    <span className="text-gray-700">Email: legal@devcraftstudios.com</span>
+                  <div className="flex items-center space-x-4 p-4 bg-white rounded-xl border border-gray-100">
+                    <div className="w-10 h-10 bg-gradient-to-r from-rosewood-500 to-carmine-500 rounded-lg flex items-center justify-center">
+                      <Shield className="w-5 h-5 text-white" />
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-500 font-medium">Email</p>
+                      <p className="text-gray-900 font-semibold">legal@devcraftstudios.com</p>
+                    </div>
                   </div>
-                  <div className="flex items-center space-x-3">
-                    <Users className="w-5 h-5 text-carmine-600" />
-                    <span className="text-gray-700">Phone: +1 (555) 123-4567</span>
+                  <div className="flex items-center space-x-4 p-4 bg-white rounded-xl border border-gray-100">
+                    <div className="w-10 h-10 bg-gradient-to-r from-carmine-500 to-auburn-500 rounded-lg flex items-center justify-center">
+                      <Users className="w-5 h-5 text-white" />
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-500 font-medium">Phone</p>
+                      <p className="text-gray-900 font-semibold">+1 (555) 123-4567</p>
+                    </div>
                   </div>
-                  <div className="flex items-center space-x-3">
-                    <Calendar className="w-5 h-5 text-auburn-600" />
-                    <span className="text-gray-700">Last updated: December 2024</span>
+                  <div className="flex items-center space-x-4 p-4 bg-white rounded-xl border border-gray-100">
+                    <div className="w-10 h-10 bg-gradient-to-r from-auburn-500 to-burgundy-500 rounded-lg flex items-center justify-center">
+                      <Calendar className="w-5 h-5 text-white" />
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-500 font-medium">Last Updated</p>
+                      <p className="text-gray-900 font-semibold">December 2024</p>
+                    </div>
                   </div>
                 </div>
               </motion.div>

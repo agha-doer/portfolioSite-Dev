@@ -1,22 +1,38 @@
-import { useState, useEffect } from 'react';
+'use client';
+
+import { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const router = useRouter();
+
+  // Throttled scroll handler for better performance
+  const handleScroll = useCallback(() => {
+    const scrolled = window.scrollY > 50;
+    setIsScrolled(scrolled);
+  }, []);
 
   useEffect(() => {
-    const handleScroll = () => {
-      if (typeof window !== 'undefined') {
-        setIsScrolled(window.scrollY > 50);
+    if (typeof window === 'undefined') return;
+
+    // Throttle scroll events for better performance
+    let ticking = false;
+    const throttledScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          handleScroll();
+          ticking = false;
+        });
+        ticking = true;
       }
     };
 
-    if (typeof window !== 'undefined') {
-      window.addEventListener('scroll', handleScroll);
-      return () => window.removeEventListener('scroll', handleScroll);
-    }
-  }, []);
+    window.addEventListener('scroll', throttledScroll, { passive: true });
+    return () => window.removeEventListener('scroll', throttledScroll);
+  }, [handleScroll]);
 
   const navItems = [
     { label: 'Home', path: '/' },
@@ -28,16 +44,14 @@ const Navigation = () => {
 
   return (
     <motion.nav
-      // className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        className={`fixed top-0 left-44 w-[80%] z-50 transition-all duration-300 ${
-      // className={`fixed top-0 left-3/4 transform z-50 transition-all duration-300
+      className={`fixed top-0 left-44 w-[80%] z-50 transition-all duration-300 ${
         isScrolled 
           ? 'bg-white/95 backdrop-blur-md shadow-medium border-b border-gray-200' 
           : 'bg-transparent'
       }`}
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.6 }}
+      initial={{ y: -100, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.4, ease: "easeOut" }}
     >
       <div className="container mx-auto px-6" style={{ borderRadius: '40px' }}>
         <div className="flex items-center justify-between h-16">
@@ -57,23 +71,21 @@ const Navigation = () => {
           {/* Desktop Navigation */}
           <div className="hidden md:flex space-x-8">
             {navItems.map((item) => (
-              <motion.div key={item.path}>
-                <Link href={item.path}>
+              <Link key={item.path} href={item.path}>
+                <motion.div
+                  className="relative font-medium text-gray-700 hover:text-rosewood-800 transition-colors cursor-pointer"
+                  whileHover={{ y: -2 }}
+                  whileTap={{ y: 0 }}
+                >
+                  {item.label}
                   <motion.div
-                    className="relative font-medium text-gray-700 hover:text-rosewood-800 transition-colors"
-                    whileHover={{ y: -2 }}
-                    whileTap={{ y: 0 }}
-                  >
-                    {item.label}
-                    <motion.div
-                      className="absolute bottom-0 left-0 h-0.5 bg-gradient-primary"
-                      initial={{ width: 0 }}
-                      whileHover={{ width: '100%' }}
-                      transition={{ duration: 0.3 }}
-                    />
-                  </motion.div>
-                </Link>
-              </motion.div>
+                    className="absolute bottom-0 left-0 h-0.5 bg-gradient-primary"
+                    initial={{ width: 0 }}
+                    whileHover={{ width: '100%' }}
+                    transition={{ duration: 0.3 }}
+                  />
+                </motion.div>
+              </Link>
             ))}
           </div>
 
@@ -82,9 +94,7 @@ const Navigation = () => {
             className="hidden md:block px-6 py-2 bg-gradient-primary text-white rounded-lg font-medium hover-lift"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            onClick={() => {
-              window.location.href = '/contact';
-            }}
+            onClick={() => router.push('/contact')}
           >
             Get Started
           </motion.button>
