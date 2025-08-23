@@ -134,7 +134,9 @@ const HeroSection = () => {
                 whileTap={{ scale: 0.95 }}
                 onClick={() => {
                   // Scroll to portfolio section
-                  document.getElementById('portfolio')?.scrollIntoView({ behavior: 'smooth' });
+                  if (typeof window !== 'undefined') {
+                    document.getElementById('portfolio')?.scrollIntoView({ behavior: 'smooth' });
+                  }
                 }}
                 onMouseMove={(e) => {
                   const el = e.currentTarget as HTMLButtonElement

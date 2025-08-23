@@ -72,6 +72,11 @@ export const GlowingCards: React.FC<GlowingCardsProps> = ({
   const overlayRef = useRef<HTMLDivElement>(null);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [showOverlay, setShowOverlay] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -80,6 +85,8 @@ export const GlowingCards: React.FC<GlowingCardsProps> = ({
     if (!container || !overlay || !enableGlow) return;
 
     const handleMouseMove = (e: MouseEvent) => {
+      if (typeof window === 'undefined') return;
+      
       const rect = container.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
@@ -118,17 +125,47 @@ export const GlowingCards: React.FC<GlowingCardsProps> = ({
     ...customTheme,
   } as React.CSSProperties;
 
+  if (!isMounted) {
+    return (
+      <div className={cn("relative w-full", className)} style={containerStyle}>
+        <div 
+          className={cn("relative mx-auto", "px-6 py-2")}
+          style={{ 
+            padding: "var(--padding)",
+            maxWidth: maxWidth
+          }}
+        >
+          <div 
+            className={cn(
+              "flex items-center justify-center flex-wrap",
+              responsive && "flex-col sm:flex-row"
+            )}
+            style={{ gap: gap }}
+          >
+            {children}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className={cn("relative w-full", className)} style={containerStyle}>
       <div 
         ref={containerRef}
-        className={cn("relative max-w-[var(--max-width)] mx-auto", "px-6 py-2")}
-        style={{ padding: "var(--padding)" }}
+        className={cn("relative mx-auto", "px-6 py-2")}
+        style={{ 
+          padding: "var(--padding)",
+          maxWidth: maxWidth
+        }}
       >
-        <div className={cn(
-          "flex items-center justify-center flex-wrap gap-[var(--gap)]",
-          responsive && "flex-col sm:flex-row"
-        )}>
+        <div 
+          className={cn(
+            "flex items-center justify-center flex-wrap",
+            responsive && "flex-col sm:flex-row"
+          )}
+          style={{ gap: gap }}
+        >
           {children}
         </div>
 
@@ -137,9 +174,10 @@ export const GlowingCards: React.FC<GlowingCardsProps> = ({
             ref={overlayRef}
             className={cn(
               "absolute inset-0 pointer-events-none select-none",
-              "opacity-0 transition-all duration-[var(--animation-duration)] ease-out"
+              "opacity-0 transition-all ease-out"
             )}
             style={{
+              transitionDuration: `${animationDuration}ms`,
               WebkitMask: "radial-gradient(var(--glow-radius) var(--glow-radius) at var(--x, 0) var(--y, 0), #000 1%, transparent 50%)",
               mask: "radial-gradient(var(--glow-radius) var(--glow-radius) at var(--x, 0) var(--y, 0), #000 1%, transparent 50%)",
               opacity: showOverlay ? 'var(--opacity)' : '0',
@@ -147,10 +185,14 @@ export const GlowingCards: React.FC<GlowingCardsProps> = ({
           >
             <div 
               className={cn(
-                "flex items-center justify-center flex-wrap gap-[var(--gap)] max-w-[var(--max-width)] center mx-auto",
+                "flex items-center justify-center flex-wrap center mx-auto",
                 responsive && "flex-col sm:flex-row"
               )}
-              style={{ padding: "var(--padding)" }}
+              style={{ 
+                padding: "var(--padding)",
+                gap: gap,
+                maxWidth: maxWidth
+              }}
             >
                              {React.Children.map(children, (child, index) => {
                  if (React.isValidElement(child) && child.type === GlowingCard) {

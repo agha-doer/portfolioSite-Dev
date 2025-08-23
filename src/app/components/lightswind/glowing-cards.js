@@ -12,12 +12,19 @@ export const GlowingCards = ({ children, className, enableGlow = true, glowRadiu
     const overlayRef = useRef(null);
     const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
     const [showOverlay, setShowOverlay] = useState(false);
+    const [isMounted, setIsMounted] = useState(false);
+
+    useEffect(() => {
+        setIsMounted(true);
+    }, []);
     useEffect(() => {
         const container = containerRef.current;
         const overlay = overlayRef.current;
         if (!container || !overlay || !enableGlow)
             return;
         const handleMouseMove = (e) => {
+            if (typeof window === 'undefined') return;
+            
             const rect = container.getBoundingClientRect();
             const x = e.clientX - rect.left;
             const y = e.clientY - rect.top;
@@ -50,12 +57,16 @@ export const GlowingCards = ({ children, className, enableGlow = true, glowRadiu
         backgroundColor: backgroundColor || undefined,
         ...customTheme,
     };
-    return (_jsx("div", { className: cn("relative w-full", className), style: containerStyle, children: _jsxs("div", { ref: containerRef, className: cn("relative max-w-[var(--max-width)] mx-auto ", "px-6 py-2"), style: { padding: "var(--padding)" }, children: [_jsx("div", { className: cn("flex items-center justify-center flex-wrap gap-[var(--gap)]", responsive && "flex-col sm:flex-row "), children: children }), enableGlow && (_jsx("div", { ref: overlayRef, className: cn("absolute inset-0 pointer-events-none select-none", "opacity-0 transition-all duration-[var(--animation-duration)] ease-out"), style: {
+    if (!isMounted) {
+        return (_jsx("div", { className: cn("relative w-full", className), style: containerStyle, children: _jsxs("div", { className: cn("relative mx-auto ", "px-6 py-2"), style: { padding: "var(--padding)", maxWidth: maxWidth }, children: [_jsx("div", { className: cn("flex items-center justify-center flex-wrap", responsive && "flex-col sm:flex-row "), style: { gap: gap }, children: children })] }) }));
+    }
+    return (_jsx("div", { className: cn("relative w-full", className), style: containerStyle, children: _jsxs("div", { ref: containerRef, className: cn("relative mx-auto ", "px-6 py-2"), style: { padding: "var(--padding)", maxWidth: maxWidth }, children: [_jsx("div", { className: cn("flex items-center justify-center flex-wrap", responsive && "flex-col sm:flex-row "), style: { gap: gap }, children: children }), enableGlow && (_jsx("div", { ref: overlayRef,                 className: cn("absolute inset-0 pointer-events-none select-none", "opacity-0 transition-all ease-out"), style: {
+                        transitionDuration: animationDuration + 'ms',
                         // String concatenation for WebkitMask and mask
                         WebkitMask: "radial-gradient(var(--glow-radius) var(--glow-radius) at var(--x, 0) var(--y, 0), #000 1%, transparent 50%)",
                         mask: "radial-gradient(var(--glow-radius) var(--glow-radius) at var(--x, 0) var(--y, 0), #000 1%, transparent 50%)",
                         opacity: showOverlay ? 'var(--opacity)' : '0',
-                    }, children: _jsx("div", { className: cn("flex items-center justify-center flex-wrap gap-[var(--gap)] max-w-[var(--max-width)] center mx-auto", responsive && "flex-col sm:flex-row"), style: { padding: "var(--padding)" }, children: React.Children.map(children, (child, index) => {
+                    }, children: _jsx("div", { className: cn("flex items-center justify-center flex-wrap center mx-auto", responsive && "flex-col sm:flex-row"), style: { padding: "var(--padding)", gap: gap, maxWidth: maxWidth }, children: React.Children.map(children, (child, index) => {
                             if (React.isValidElement(child) && child.type === GlowingCard) {
                                 const cardGlowColor = child.props.glowColor || "#3b82f6";
                                 return React.cloneElement(child, {

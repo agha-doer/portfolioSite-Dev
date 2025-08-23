@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react';
 import Navigation from './components/Navigation';
+import ErrorBoundary from './components/ErrorBoundary';
 import ScrollProgress from './components/ScrollProgress';
 import StickyButton from './components/StickyButton';
 import AdvancedStickyButton from './components/AdvancedStickyButton';
@@ -38,6 +39,8 @@ export default function Home() {
   const { featuredInsightsRef, servicesRef } = useMorphismAnimation();
 
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+    
     document.documentElement.style.scrollBehavior = 'smooth';
     document.documentElement.style.overflowX = 'hidden';
     return () => {
@@ -47,7 +50,8 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-background font-body overflow-x-hidden">
+    <ErrorBoundary>
+      <div className="min-h-screen bg-background font-body overflow-x-hidden overflow-y-hidden">
       {/* <ScrollProgress /> */}
       <AdvancedStickyButton 
         text="Let's Talk Business"
@@ -56,7 +60,9 @@ export default function Home() {
         colorScheme="rosewood"
         onClick={() => {
           // Scroll to contact section
-          document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+          if (typeof window !== 'undefined') {
+            document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+          }
         }}
       />
       <Navigation />
@@ -76,9 +82,7 @@ export default function Home() {
             <ServicesSection />
           </div>
           <CarouselSection />
-          {/* <GlowingCardsDemo /> */}
           <TechStackSection />
-          {/* <PartnersSection /> */}
           <MetricsSection />
           <ProcessSection />
           <PricingSection />
@@ -86,11 +90,13 @@ export default function Home() {
           <div id="portfolio">
             <ProjectsSection />
           </div>
+          
           <GallerySection />
           <TestimonialsSection />
           <CaseStudiesSection />
-          <TeamSection />
+          {/* <TeamSection /> */}
           <BlogCarouselSection />
+
           <AwardsSection />
           <AboutSection />
           <FAQSection />
@@ -100,5 +106,6 @@ export default function Home() {
       </main>
       <Footer />
     </div>
+    </ErrorBoundary>
   );
 }

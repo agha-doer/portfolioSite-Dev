@@ -147,10 +147,10 @@ const CarouselSection: React.FC = () => {
             initial={{ scale: 0 }}
             animate={isVisible ? { scale: 1 } : { scale: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="inline-flex items-center gap-2 bg-gradient-to-r from-rosewood-500/20 to-carmine-500/20 px-6 py-3 rounded-full mb-8"
+            className="inline-flex items-center gap-2 bg-gradient-primary opacity-90 px-6 py-3 rounded-full mb-8"
           >
-            <Star className="w-5 h-5 text-rosewood-500" />
-            <span className="text-sm font-semibold text-rosewood-600">Our Solutions</span>
+            <Star className="w-5 h-5 text-white" />
+            <span className="text-sm font-semibold text-white">Our Solutions</span>
           </motion.div>
           
           <h2 className="font-display text-6xl md:text-7xl font-bold mb-8 bg-gradient-to-r from-rosewood-600 via-carmine-600 to-burgundy-600 bg-clip-text text-transparent">
@@ -187,7 +187,7 @@ const CarouselSection: React.FC = () => {
                       transition={{ duration: 0.6, delay: 0.2 }}
                       className="flex items-center gap-4"
                     >
-                      <div className={`w-16 h-16 rounded-2xl bg-gradient-to-r ${carouselItems[currentIndex].gradient} flex items-center justify-center shadow-xl`}>
+                      <div className={`w-16 h-16 rounded-2xl bg-gradient-primary flex items-center justify-center shadow-xl`}>
                         {React.createElement(carouselItems[currentIndex].icon, { className: "w-8 h-8 text-white" })}
                       </div>
                       <div className="bg-gradient-to-r from-rosewood-500/20 to-carmine-500/20 px-4 py-2 rounded-full">
@@ -204,7 +204,7 @@ const CarouselSection: React.FC = () => {
                       transition={{ duration: 0.6, delay: 0.3 }}
                       className="text-5xl md:text-6xl font-bold leading-tight"
                     >
-                      <span className="bg-gradient-to-r from-rosewood-600 to-carmine-600 bg-clip-text text-transparent">
+                      <span className="bg-gradient-primary bg-clip-text text-transparent">
                         {carouselItems[currentIndex].title}
                       </span>
                     </motion.h3>
@@ -258,7 +258,7 @@ const CarouselSection: React.FC = () => {
                       initial={{ opacity: 0, y: 30 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.6, delay: 0.7 }}
-                      className={`px-8 py-4 rounded-xl bg-gradient-to-r ${carouselItems[currentIndex].gradient} text-white font-semibold shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105`}
+                      className={`px-8 py-4 rounded-xl bg-gradient-primary text-white font-semibold shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105`}
                     >
                       Get Started
                     </motion.button>
@@ -275,7 +275,7 @@ const CarouselSection: React.FC = () => {
                      <div className="absolute inset-0 bg-gradient-to-br from-rosewood-500/10 to-carmine-500/10 rounded-3xl" />
                      
                      {/* Main Image Container */}
-                     <div className="relative bg-gradient-to-br from-card/50 to-card/30 rounded-3xl p-8 backdrop-blur-sm border border-white/20 overflow-hidden">
+                     <div className="relative h-full bg-gradient-to-br from-card/50 to-card/30 rounded-3xl p-8 backdrop-blur-sm border border-white/20 overflow-hidden">
                        {/* Background Image */}
                        <motion.div
                          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
@@ -293,13 +293,13 @@ const CarouselSection: React.FC = () => {
                        />
                        
                        {/* Overlay Gradient */}
-                       <div className="absolute inset-0 bg-gradient-to-br from-rosewood-900/60 via-carmine-900/40 to-transparent" />
+                       <div className="absolute inset-0 bg-gradient-primary opacity-30" />
                        
                        {/* Content Overlay */}
                        <div className="relative z-10 h-full flex flex-col justify-between">
                          {/* Top Icon */}
                          <motion.div
-                           className={`w-20 h-20 rounded-2xl bg-gradient-to-r ${carouselItems[currentIndex].gradient} flex items-center justify-center shadow-xl self-end`}
+                           className={`w-20 h-20 rounded-2xl bg-gradient-primary flex items-center justify-center shadow-xl self-end`}
                            animate={{
                              scale: [1, 1.1, 1],
                              rotate: [0, 5, 0],

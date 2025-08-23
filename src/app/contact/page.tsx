@@ -25,7 +25,9 @@ export default function Contact() {
         colorScheme="carmine"
         onClick={() => {
           // Scroll to contact form or trigger contact action
-          document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth' });
+          if (typeof window !== 'undefined') {
+            document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth' });
+          }
         }}
       />
       <Navigation />

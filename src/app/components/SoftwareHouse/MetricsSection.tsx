@@ -56,7 +56,7 @@ const MetricsSection: React.FC = () => {
               </div>
               
               <article className="relative rounded-2xl bg-gradient-to-br from-gray-800/80 to-gray-900/80 backdrop-blur-sm p-8 text-center border border-gray-700/50 hover:border-gray-600/50 transition-all duration-300 group-hover:scale-105">
-                <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-rosewood-500 to-carmine-600 flex items-center justify-center">
+                <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-primary flex items-center justify-center">
                   <m.icon className="w-8 h-8 text-white" />
                 </div>
                 <p className="text-4xl font-bold text-white mb-2">{m.value}</p>
@@ -80,8 +80,15 @@ const MetricsSection: React.FC = () => {
               alt="Team collaboration" 
               className="w-full h-full object-cover"
             />
+            {/* Solid Mask */}
+            <div className="absolute inset-0 bg-gradient-primary"
+            // <div className="absolute inset-0 bg-rosewood-900/90"
+            style={{
+              opacity: 0.6
+            }}></div>
+
             {/* Gradient Mask */}
-            <div className="absolute inset-0 bg-gradient-to-r from-rosewood-900/90 via-carmine-900/80 to-auburn-900/90"></div>
+            {/* <div className="absolute inset-0 bg-gradient-to-r from-rosewood-900/90 via-carmine-900/80 to-auburn-900/90"></div> */}
           </div>
 
           <div className="relative z-10 p-12 md:p-16 text-center">
@@ -100,7 +107,7 @@ const MetricsSection: React.FC = () => {
               <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                 <Button 
                   size="lg" 
-                  className="bg-gradient-to-r from-rosewood-600 to-carmine-600 hover:from-rosewood-700 hover:to-carmine-700 text-white px-8 py-4 text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 group"
+                  className="bg-gradient-primary hover:from-rosewood-700 hover:to-carmine-700 text-white px-8 py-4 text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 group"
                 >
                   Start Your Project
                   <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
@@ -109,7 +116,7 @@ const MetricsSection: React.FC = () => {
                 <Button 
                   variant="outline" 
                   size="lg"
-                  className="border-2 border-white/30 text-gray-300 hover:bg-white/10 px-8 py-4 text-lg font-semibold rounded-xl backdrop-blur-sm transition-all duration-300 group"
+                  className="group border-2 border-white/30 text-black/70 hover:text-white hover:bg-white/10 px-8 py-4 text-lg font-semibold rounded-xl backdrop-blur-sm transition-all duration-300"
                 >
                   <Play className="mr-2 w-5 h-5 group-hover:scale-110 transition-transform duration-300" />
                   Watch Demo

@@ -50,8 +50,11 @@ const Navigation = () => {
           : 'bg-transparent'
       }`}
       initial={{ y: -100, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
+      animate={{ y: 0, opacity: 0.9 }}
       transition={{ duration: 0.4, ease: "easeOut" }}
+      style={{
+        opacity: 0.9,
+      }}
     >
       <div className="container mx-auto px-6" style={{ borderRadius: '40px' }}>
         <div className="flex items-center justify-between h-16">

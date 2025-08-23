@@ -22,6 +22,8 @@ const ServicesSection = () => {
 
   // 🔹 Set default tilt & shine on mount
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+    
     const cards = document.querySelectorAll('.card-animated');
     cards.forEach((card) => {
       const el = card as HTMLDivElement;

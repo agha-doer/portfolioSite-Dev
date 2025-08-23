@@ -185,7 +185,7 @@ const FeaturedInsightsSection = () => {
           >
             <div className="space-y-4">
               <motion.h3 
-                className="text-rosewood-400 font-semibold text-sm uppercase tracking-wider"
+                className="font-semibold text-sm uppercase tracking-wider bg-[linear-gradient(135deg,rgb(157,23,77),rgb(153,27,27),rgb(146,64,14),rgb(127,29,29),rgb(157,23,77))] bg-clip-text text-transparent bg-[length:200%_100%]" 
                 initial={{ opacity: 0, y: 20 }}
                 animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
@@ -200,7 +200,7 @@ const FeaturedInsightsSection = () => {
                 transition={{ duration: 0.6, delay: 0.3 }}
               >
                 Stories of our transformations across{' '}
-                <span className="text-rosewood-400">Services and Industries</span>
+                <span className="text-gradient-primary">Services and Industries</span>
               </motion.h2>
               
               <motion.p 
@@ -219,7 +219,7 @@ const FeaturedInsightsSection = () => {
               transition={{ duration: 0.6, delay: 0.5 }}
             >
               <Button 
-                className="bg-gradient-to-r from-rosewood-600 to-carmine-600 hover:from-rosewood-700 hover:to-carmine-700 text-white px-8 py-3 rounded-lg font-semibold transition-all duration-300 border-0 shadow-lg hover:shadow-xl"
+                className="bg-gradient-primary text-white px-8 py-3 rounded-lg font-semibold transition-all duration-300 border-0 shadow-lg hover:shadow-xl"
                 size="lg"
               >
                 Explore More
@@ -260,14 +260,14 @@ const FeaturedInsightsSection = () => {
                     />
                     
                     {/* Background Gradient Overlay */}
-                    <div className={`absolute inset-0 bg-gradient-to-br ${insight.gradient} opacity-40 group-hover:opacity-50 transition-opacity duration-300`} />
+                    <div className={`absolute inset-0 bg-gradient-primary opacity-20 group-hover:opacity-30 transition-opacity duration-300`} />
                     
                     {/* Content */}
                     <div className="relative z-10 p-4 h-full flex flex-col justify-between">
                       <div className="flex items-start justify-between">
                         <div className="flex items-center space-x-2">
-                          <insight.icon className="h-4 w-4 text-rosewood-400" />
-                          <span className="text-xs font-medium text-rosewood-400 uppercase tracking-wider">
+                          <insight.icon className="h-4 w-4 text-white" />
+                          <span className="text-xs font-medium text-white uppercase tracking-wider">
                             {insight.type}
                           </span>
                         </div>

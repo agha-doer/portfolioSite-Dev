@@ -84,6 +84,8 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     }
 
     const handleMouseDown: React.MouseEventHandler<HTMLButtonElement> = (e) => {
+      if (typeof window === 'undefined') return;
+      
       const el = hostRef.current
       if (el) {
         const rect = el.getBoundingClientRect()
@@ -100,6 +102,8 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     }
 
     const handleMouseMove: React.MouseEventHandler<HTMLButtonElement> = (e) => {
+      if (typeof window === 'undefined') return;
+      
       const el = hostRef.current
       if (el) {
         const rect = el.getBoundingClientRect()

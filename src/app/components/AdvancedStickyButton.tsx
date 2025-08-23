@@ -152,14 +152,15 @@ const AdvancedStickyButton = ({
         transition={{ duration: 0.5, delay: 0.2 }}
       >
 <motion.button
-  className={`bg-gradient-to-b ${colors.from} ${colors.to} ${colors.hoverFrom} ${colors.hoverTo} text-white font-semibold py-4 px-3 rounded-full shadow-lg whitespace-nowrap transition-all duration-300 border border-opacity-20`}
+  className={`bg-gradient-primary text-white font-semibold py-4 px-3 rounded-full shadow-lg whitespace-nowrap transition-all duration-300 border border-opacity-20`}
+  // className={`bg-gradient-to-b ${colors.from} ${colors.to} ${colors.hoverFrom} ${colors.hoverTo} text-white font-semibold py-4 px-3 rounded-full shadow-lg whitespace-nowrap transition-all duration-300 border border-opacity-20`}
   style={{
     textOrientation: "upright",   // keeps letters upright
     transform: "rotate(270deg)"   // flips so it reads bottom-to-top
   }}
   onClick={onClick}
-  onMouseLeave={() => setIsHovered(false)}
-  whileTap={{ scale: 0.95 }}
+  // onMouseLeave={() => setIsHovered(false)}
+  // whileTap={{ scale: 0.95 }}
 >
   <motion.span
     animate={{ 

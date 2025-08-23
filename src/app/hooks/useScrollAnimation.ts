@@ -35,6 +35,8 @@ export const useParallax = (speed = 0.5) => {
   const [offset, setOffset] = useState(0);
 
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+    
     const handleScroll = () => {
       setOffset(window.pageYOffset * speed);
     };
@@ -50,6 +52,8 @@ export const useScrollProgress = () => {
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+    
     const handleScroll = () => {
       const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
       const scrollProgress = (window.pageYOffset / totalHeight) * 100;

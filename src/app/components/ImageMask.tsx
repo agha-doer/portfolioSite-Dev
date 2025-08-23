@@ -12,6 +12,8 @@ const ImageMask = ({ className = '', children }: ImageMaskProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+    
     const handleMouseMove = (e: MouseEvent) => {
       if (containerRef.current) {
         const rect = containerRef.current.getBoundingClientRect();
