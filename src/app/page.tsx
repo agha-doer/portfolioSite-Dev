@@ -33,6 +33,7 @@ import { useStickyHeroAnimation } from './hooks/useStickyHeroAnimation';
 import { useMorphismAnimation } from './hooks/useMorphismAnimation';
 import CarouselSection from './components/SoftwareHouse/CarouselSection';
 import GlowingCardsDemo from './components/SoftwareHouse/GlowingCardsDemo';
+import { SparkleParticles } from './components/SparkleParticles';
 
 export default function Home() {
   const { heroRef, sectionsRef } = useStickyHeroAnimation();
@@ -70,6 +71,21 @@ export default function Home() {
         {/* Hero Section - Will stay sticky */}
         <section ref={heroRef} className="relative h-screen overflow-hidden bg-background">
           {/* <GearsBackground /> */}
+          {/* Sparkle Particles Background */}
+          <SparkleParticles
+            className="absolute inset-0"
+            particleColor="#9d174d"
+            maxParticleSize={2}
+            baseDensity={40}
+            maxSpeed={0.5}
+            maxOpacity={0.3}
+            enableHoverGrab={true}
+            hoverMode="grab"
+            clickEffect={true}
+            particleShape="circle"
+            enableParallax={true}
+            zIndexLevel={1}
+          />
           <HeroSection />
         </section>
         

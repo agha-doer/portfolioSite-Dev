@@ -8,6 +8,7 @@ import AdvancedStickyButton from '../components/AdvancedStickyButton';
 import Footer from '../components/Footer';
 import SampleImage from '../components/SampleImage';
 import ContactSection from '../components/ContactSection';
+import { SparkleParticles } from '../components/SparkleParticles';
 import { Code, Smartphone, Globe, Database, Cloud, Shield, ArrowRight } from 'lucide-react';
 
 export default function Services() {
@@ -186,7 +187,23 @@ export default function Services() {
 
         {/* CTA Section */}
         <section className="py-20 bg-gradient-primary relative overflow-hidden">
-          <div className="container mx-auto px-6 text-center">
+          {/* Sparkle Particles Background */}
+          <SparkleParticles
+            className="absolute inset-0"
+            particleColor="#ffffff"
+            maxParticleSize={2}
+            baseDensity={50}
+            maxSpeed={0.8}
+            maxOpacity={0.6}
+            enableHoverGrab={true}
+            hoverMode="grab"
+            clickEffect={true}
+            particleShape="circle"
+            enableParallax={true}
+            zIndexLevel={1}
+          />
+          
+          <div className="container mx-auto px-6 text-center relative z-10">
             <motion.div
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
