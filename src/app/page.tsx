@@ -8,7 +8,6 @@ import AdvancedStickyButton from './components/AdvancedStickyButton';
 import HeroSection from './components/SoftwareHouse/HeroSection';
 import FeaturedInsightsSection from './components/SoftwareHouse/FeaturedInsightsSection';
 import ServicesSection from './components/SoftwareHouse/ServicesSection';
-import AboutSection from './components/AboutSection';
 import ProjectsSection from './components/ProjectsSection';
 import ContactSection from './components/ContactSection';
 import Footer from './components/Footer';
@@ -23,6 +22,7 @@ import { useMorphismAnimation } from './hooks/useMorphismAnimation';
 import CarouselSection from './components/SoftwareHouse/CarouselSection';
 import { SparkleParticles } from './components/SparkleParticles';
 import CodeBlockSection from './components/CodeBlockSection';
+import ThreeDImageRingGallery from './components/3DImageRingGallery';
 
 export default function Home() {
   const { heroRef, sectionsRef } = useStickyHeroAnimation();
@@ -95,8 +95,8 @@ export default function Home() {
             <ProjectsSection />
           </div>
           <CodeBlockSection />
-          
-          <GallerySection />
+          <ThreeDImageRingGallery />
+          {/* <GallerySection /> */}
           {/* <TeamSection /> */}
           <FAQSection />
           <ContactSection />
