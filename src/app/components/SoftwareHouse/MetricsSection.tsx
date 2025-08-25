@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Button } from '../ui/button';
 import { ArrowRight, Play, Star, Zap } from 'lucide-react';
+import Galaxy from '../ui/Galaxy';
+import { GlowingCards, GlowingCard } from '../ui/glowing-cards';
 
 const metrics = [
   { label: 'Projects Delivered', value: '120+', icon: Star },
@@ -13,6 +15,20 @@ const metrics = [
 const MetricsSection: React.FC = () => {
   return (
     <section id="metrics" className="py-20 bg-gradient-to-br from-gray-900 via-gray-800 to-black relative overflow-hidden">
+      {/* Galaxy Background */}
+      <div className="absolute inset-0 opacity-30">
+        <Galaxy 
+          density={1.2}
+          hueShift={240}
+          glowIntensity={0.4}
+          saturation={0.3}
+          twinkleIntensity={0.5}
+          rotationSpeed={0.05}
+          mouseInteraction={false}
+          transparent={true}
+        />
+      </div>
+      
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute top-10 left-10 w-32 h-32 bg-gradient-to-br from-rosewood-500 to-transparent rounded-full blur-3xl"></div>
@@ -28,7 +44,7 @@ const MetricsSection: React.FC = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            By the Numbers
+            Our <span className="text-gradient-primary">Track Record</span>
           </motion.h2>
           <motion.p 
             className="text-xl text-gray-300 max-w-2xl mx-auto"
@@ -36,35 +52,98 @@ const MetricsSection: React.FC = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            Proof that our process works and delivers exceptional results
+            Delivering excellence through proven results and measurable success
           </motion.p>
         </header>
 
-        {/* Metrics Grid */}
-        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4 mb-20">
-          {metrics.map((m, index) => (
-            <motion.div
-              key={m.label}
-              className="relative group"
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-            >
-              {/* Animated Border Effect */}
-              <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-rosewood-500 via-carmine-500 to-auburn-500 p-0.5 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                <div className="w-full h-full rounded-2xl bg-gradient-to-br from-gray-800 to-gray-900"></div>
-              </div>
-              
-              <article className="relative rounded-2xl bg-gradient-to-br from-gray-800/80 to-gray-900/80 backdrop-blur-sm p-8 text-center border border-gray-700/50 hover:border-gray-600/50 transition-all duration-300 group-hover:scale-105">
-                <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-primary flex items-center justify-center">
-                  <m.icon className="w-8 h-8 text-white" />
-                </div>
-                <p className="text-4xl font-bold text-white mb-2">{m.value}</p>
-                <p className="text-gray-300 font-medium">{m.label}</p>
-              </article>
-            </motion.div>
-          ))}
-        </div>
+        {/* Metrics Grid with Glowing Cards */}
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.3 }}
+          className="mb-20"
+        >
+          <GlowingCards
+            enableGlow={true}
+            glowRadius={30}
+            glowOpacity={0.8}
+            animationDuration={500}
+            gap="2rem"
+            maxWidth="100%"
+            padding="0"
+            responsive={true}
+            customTheme={{
+              cardBg: "rgba(31, 41, 55, 0.8)",
+              cardBorder: "rgba(75, 85, 99, 0.5)",
+              textColor: "#ffffff",
+              hoverBg: "rgba(55, 65, 81, 0.9)",
+            }}
+          >
+                         {metrics.map((m, index) => {
+               const [isHovered, setIsHovered] = useState(false);
+               
+               return (
+                 <GlowingCard
+                   key={m.label}
+                   glowColor="#9d174d"
+                   className="bg-gradient-to-br from-gray-800/80 to-gray-900/80 backdrop-blur-sm 
+                   border border-gray-700/50 hover:border-transparent 
+                   transition-all duration-300 
+                   p-8 text-center min-w-[250px]"
+                 >
+                   <motion.div
+                     initial={{ opacity: 0, scale: 0.8 }}
+                     whileInView={{ opacity: 1, scale: 1 }}
+                     transition={{ duration: 0.6, delay: index * 0.1 }}
+                     className="group"
+                     onHoverStart={() => setIsHovered(true)}
+                     onHoverEnd={() => setIsHovered(false)}
+                   >
+                     <motion.div 
+                       className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-primary flex items-center justify-center group-hover:shadow-2xl group-hover:shadow-rose-500/50"
+                       animate={isHovered ? {
+                         y: -8,
+                         scale: 1.1,
+                         transition: { 
+                           type: "spring", 
+                           stiffness: 300, 
+                           damping: 10 
+                         }
+                       } : {
+                         y: [0, -4, 0],
+                         transition: {
+                           duration: 3,
+                           repeat: Infinity,
+                           ease: "easeInOut"
+                         }
+                       }}
+                     >
+                       <motion.div
+                         animate={isHovered ? {
+                           rotate: 360,
+                           transition: { 
+                             duration: 0.6,
+                             ease: "easeInOut"
+                           }
+                         } : {
+                           rotate: 0,
+                           transition: { 
+                             duration: 0.3,
+                             ease: "easeInOut"
+                           }
+                         }}
+                       >
+                         <m.icon className="w-8 h-8 text-white" />
+                       </motion.div>
+                     </motion.div>
+                     <p className="text-4xl font-bold text-white mb-2">{m.value}</p>
+                     <p className="text-gray-300 font-medium">{m.label}</p>
+                   </motion.div>
+                 </GlowingCard>
+               );
+             })}
+          </GlowingCards>
+        </motion.div>
 
         {/* CTA Section */}
         <motion.div 
