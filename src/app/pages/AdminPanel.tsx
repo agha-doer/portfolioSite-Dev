@@ -8,6 +8,8 @@ import { Badge } from '../components/ui/badge';
 import { Input } from '../components/ui/input';
 import { Label } from '../components/ui/label';
 import { supabase } from '../../lib/supabase';
+import TiptapEditor from '../components/ui/tiptap-editor';
+import ImageUpload from '../components/ui/image-upload';
 import { 
   FileText, 
   Search,
@@ -153,7 +155,7 @@ const AdminPanel = () => {
       const blogData = {
         ...formData,
         tags: formData.tags.split(',').map(tag => tag.trim()).filter(tag => tag),
-        description: formData.description ? JSON.parse(formData.description) : null
+        description: formData.description || null
       };
 
       console.log('Processed blog data:', blogData);
@@ -211,7 +213,7 @@ const AdminPanel = () => {
     setFormData({
       title: blog.title,
       slug: blog.slug,
-      description: typeof blog.description === 'string' ? blog.description : JSON.stringify(blog.description),
+      description: typeof blog.description === 'string' ? blog.description : (blog.description ? JSON.stringify(blog.description) : ''),
       excerpt: blog.excerpt || '',
       featured_image: blog.featured_image || '',
       tags: blog.tags?.join(', ') || '',
@@ -324,14 +326,24 @@ const AdminPanel = () => {
                       <Badge variant={blog.status === 'published' ? 'default' : 'secondary'}>
                         {blog.status}
                       </Badge>
-                      <div className="flex space-x-2">
-                        <Button size="sm" variant="ghost" onClick={() => handleEditBlog(blog)}>
-                          <Edit className="w-4 h-4" />
-                        </Button>
-                        <Button size="sm" variant="ghost" onClick={() => handleDeleteBlog(blog.id)}>
-                          <Trash2 className="w-4 h-4" />
-                        </Button>
-                      </div>
+                                             <div className="flex space-x-2">
+                         <Button 
+                           size="sm" 
+                           variant="ghost" 
+                           onClick={() => handleEditBlog(blog)}
+                           className="hover:bg-black hover:text-white transition-colors"
+                         >
+                           <Edit className="w-4 h-4" />
+                         </Button>
+                         <Button 
+                           size="sm" 
+                           variant="ghost" 
+                           onClick={() => handleDeleteBlog(blog.id)}
+                           className="hover:bg-black hover:text-white transition-colors"
+                         >
+                           <Trash2 className="w-4 h-4" />
+                         </Button>
+                       </div>
                     </div>
                     
                     {blog.featured_image && (
@@ -416,16 +428,20 @@ const AdminPanel = () => {
           <motion.div
             initial={{ scale: 0.95, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            className="bg-white rounded-lg p-6 w-full max-w-2xl max-h-[90vh] overflow-y-auto"
+            className="bg-white rounded-lg p-6 w-full max-w-6xl max-h-[90vh] overflow-y-auto"
           >
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="text-xl font-semibold">
-                {editingBlog ? 'Edit Blog' : 'Create New Blog'}
-              </h2>
-              <Button variant="ghost" onClick={() => setShowBlogForm(false)}>
-                <X className="w-5 h-5" />
-              </Button>
-            </div>
+                         <div className="flex justify-between items-center mb-6">
+               <h2 className="text-2xl font-bold text-gray-900">
+                 {editingBlog ? 'Edit Blog' : 'Create New Blog'}
+               </h2>
+               <Button 
+                 variant="ghost" 
+                 onClick={() => setShowBlogForm(false)}
+                 className="hover:bg-black hover:text-white transition-colors"
+               >
+                 <X className="w-5 h-5" />
+               </Button>
+             </div>
 
             <form onSubmit={handleSubmitBlog} className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
@@ -458,32 +474,35 @@ const AdminPanel = () => {
                 />
               </div>
 
-              <div>
-                <Label htmlFor="description">Description (JSON)</Label>
-                <textarea
-                  id="description"
-                  value={formData.description}
-                  onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                  className="w-full p-2 border border-gray-300 rounded-md"
-                  rows={4}
-                  placeholder='{"content": "Your blog content here"}'
-                />
-              </div>
+                             <div>
+                 <Label htmlFor="description">Description</Label>
+                 <TiptapEditor
+                   value={formData.description}
+                   onChange={(value) => setFormData({ ...formData, description: value })}
+                   placeholder="Write your blog content here..."
+                   className="mt-1"
+                 />
+               </div>
 
-              <div>
-                <Label htmlFor="featured_image">Featured Image URL</Label>
-                <Input
-                  id="featured_image"
-                  value={formData.featured_image}
-                  onChange={(e) => setFormData({ ...formData, featured_image: e.target.value })}
-                />
-              </div>
+                               <div>
+                  <Label htmlFor="featured_image">Featured Image</Label>
+                  <div onClick={(e) => e.stopPropagation()}>
+                    <ImageUpload
+                      onImageUpload={(url) => {
+                        // Only update the form data, don't save automatically
+                        setFormData({ ...formData, featured_image: url });
+                      }}
+                      currentImage={formData.featured_image}
+                      className="mt-1"
+                    />
+                  </div>
+                </div>
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <Label htmlFor="category">Category</Label>
                   <Input
-                    id="category"
+                    id="category" 
                     value={formData.category}
                     onChange={(e) => setFormData({ ...formData, category: e.target.value })}
                   />
@@ -513,15 +532,20 @@ const AdminPanel = () => {
                 />
               </div>
 
-              <div className="flex justify-end space-x-3 pt-4">
-                <Button type="button" variant="outline" onClick={() => setShowBlogForm(false)}>
-                  Cancel
-                </Button>
-                <Button type="submit" className="bg-gradient-primary">
-                  <Save className="w-4 h-4 mr-2" />
-                  {editingBlog ? 'Update Blog' : 'Create Blog'}
-                </Button>
-              </div>
+                             <div className="flex justify-end space-x-3 pt-4">
+                 <Button 
+                   type="button" 
+                   variant="outline" 
+                   onClick={() => setShowBlogForm(false)}
+                   className="hover:bg-black hover:text-white hover:border-black transition-colors"
+                 >
+                   Cancel
+                 </Button>
+                 <Button type="submit" className="bg-gradient-primary">
+                   <Save className="w-4 h-4 mr-2" />
+                   {editingBlog ? 'Update Blog' : 'Create Blog'}
+                 </Button>
+               </div>
             </form>
           </motion.div>
         </div>

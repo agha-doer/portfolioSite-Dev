@@ -7,6 +7,7 @@ import { Button } from './button';
 import { Input } from './input';
 import { Label } from './label';
 import { supabase } from '../../../lib/supabase';
+import { useRouter } from 'next/navigation';
 import { 
   X, 
   Mail, 
@@ -38,6 +39,7 @@ const AuthModal: React.FC<AuthModalProps> = ({
   onClose, 
   defaultMode = 'signin' 
 }) => {
+  const router = useRouter();
   const [mode, setMode] = useState<'signin' | 'signup'>(defaultMode);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -158,10 +160,10 @@ const AuthModal: React.FC<AuthModalProps> = ({
         console.log('Sign in successful:', data);
         setAuthMessage({
           type: 'success',
-          message: 'Signed in successfully!'
+          message: 'Signed in successfully! Redirecting to admin panel...'
         });
         
-        // Close modal after a delay to show success message
+        // Close modal and redirect to admin page after a delay
         setTimeout(() => {
           onClose();
           setFormData({
@@ -171,6 +173,7 @@ const AuthModal: React.FC<AuthModalProps> = ({
             firstName: '',
             lastName: ''
           });
+          router.push('/admin');
         }, 1500);
       }
     } catch (error: any) {

@@ -40,15 +40,19 @@ const Navigation = () => {
     return () => window.removeEventListener('scroll', throttledScroll);
   }, [handleScroll]);
 
-  const navItems = [
+   // Base nav items (visible to everyone)
+   const baseNavItems = [
     { label: 'Home', path: '/' },
     { label: 'Services', path: '/services' },
     { label: 'About', path: '/about' },
     { label: 'Blog', path: '/blog' },
     { label: 'Contact', path: '/contact' },
-    { label: 'Admin', path: '/admin' },
-    { label: 'Demo', path: '/demo' },
   ];
+
+  // If logged in, add Admin
+  const navItems = user 
+    ? [...baseNavItems, { label: 'Admin', path: '/admin' }]
+    : baseNavItems;
 
   const handleOpenAuth = (mode: 'signin' | 'signup') => {
     setAuthMode(mode);
