@@ -77,6 +77,13 @@ export async function POST(request: NextRequest) {
 
     const result = await s3.upload(uploadParams).promise();
 
+    // Generate a presigned URL for the uploaded image (valid for 1 hour)
+    // const presignedUrl = s3.getSignedUrl('getObject', {
+    //   Bucket: 'blogs01',
+    //   Key: fileName,
+    //   Expires: 3600 // 1 hour in seconds
+    // });
+
     return NextResponse.json({
       success: true,
       url: base64Url, // Return base64 URL instead of presigned URL
