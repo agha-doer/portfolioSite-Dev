@@ -76,7 +76,6 @@ export const GlowingCards: React.FC<GlowingCardsProps> = ({
   glowRadius = 25,
   glowOpacity = 1,
   animationDuration = 400,
-  enableHover = true,
   gap = "2.5rem",
   maxWidth = "75rem",
   padding = "3rem 1.5rem",

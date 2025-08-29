@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import React, { useState, useRef, useEffect } from 'react';
+import { motion, useInView } from 'framer-motion';
 import { Button } from '../ui/button';
 import { ArrowRight, Play, Star, Zap } from 'lucide-react';
 import Galaxy from '../ui/Galaxy';
-import { GlowingCards, GlowingCard } from '../ui/glowing-cards';
 
 const metrics = [
   { label: 'Projects Delivered', value: '120+', icon: Star },
@@ -13,21 +12,31 @@ const metrics = [
 ];
 
 const MetricsSection: React.FC = () => {
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(sectionRef, { 
+    once: false, 
+    margin: "-100px 0px -100px 0px" 
+  });
+
   return (
-    <section id="metrics" className="py-20 bg-gradient-to-br from-gray-900 via-gray-800 to-black relative overflow-hidden">
-      {/* Galaxy Background */}
-      <div className="absolute inset-0 opacity-30">
-        <Galaxy 
-          density={1.2}
-          hueShift={240}
-          glowIntensity={0.4}
-          saturation={0.3}
-          twinkleIntensity={0.5}
-          rotationSpeed={0.05}
-          mouseInteraction={false}
-          transparent={true}
-        />
-      </div>
+    <section ref={sectionRef} id="metrics" className="py-20 bg-gradient-to-br from-gray-900 via-gray-800 to-black relative overflow-hidden">
+      {/* Optimized Galaxy Background - Only render when in view */}
+      {isInView && (
+        <div className="absolute inset-0 opacity-20">
+          <Galaxy 
+            density={0.6}
+            hueShift={240}
+            glowIntensity={0.2}
+            saturation={0.2}
+            twinkleIntensity={0.3}
+            rotationSpeed={0.02}
+            mouseInteraction={false}
+            transparent={true}
+            speed={0.5}
+            disableAnimation={!isInView}
+          />
+        </div>
+      )}
       
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-10">
@@ -63,86 +72,230 @@ const MetricsSection: React.FC = () => {
           transition={{ duration: 0.8, delay: 0.3 }}
           className="mb-20"
         >
-          <GlowingCards
-            enableGlow={true}
-            glowRadius={30}
-            glowOpacity={0.8}
-            animationDuration={500}
-            gap="2rem"
-            maxWidth="100%"
-            padding="0"
-            responsive={true}
-            customTheme={{
-              cardBg: "rgba(31, 41, 55, 0.8)",
-              cardBorder: "rgba(75, 85, 99, 0.5)",
-              textColor: "#ffffff",
-              hoverBg: "rgba(55, 65, 81, 0.9)",
-            }}
-          >
-                         {metrics.map((m, index) => {
-               const [isHovered, setIsHovered] = useState(false);
-               
-               return (
-                 <GlowingCard
-                   key={m.label}
-                   glowColor="#9d174d"
-                   className="bg-gradient-to-br from-gray-800/80 to-gray-900/80 backdrop-blur-sm 
-                   border border-gray-700/50 hover:border-transparent 
-                   transition-all duration-300 
-                   p-8 text-center min-w-[250px]"
-                 >
-                   <motion.div
-                     initial={{ opacity: 0, scale: 0.8 }}
-                     whileInView={{ opacity: 1, scale: 1 }}
-                     transition={{ duration: 0.6, delay: index * 0.1 }}
-                     className="group"
-                     onHoverStart={() => setIsHovered(true)}
-                     onHoverEnd={() => setIsHovered(false)}
-                   >
-                     <motion.div 
-                       className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-primary flex items-center justify-center group-hover:shadow-2xl group-hover:shadow-rose-500/50"
-                       animate={isHovered ? {
-                         y: -8,
-                         scale: 1.1,
-                         transition: { 
-                           type: "spring", 
-                           stiffness: 300, 
-                           damping: 10 
-                         }
-                       } : {
-                         y: [0, -4, 0],
-                         transition: {
-                           duration: 3,
-                           repeat: Infinity,
-                           ease: "easeInOut"
-                         }
-                       }}
-                     >
-                       <motion.div
-                         animate={isHovered ? {
-                           rotate: 360,
-                           transition: { 
-                             duration: 0.6,
-                             ease: "easeInOut"
-                           }
-                         } : {
-                           rotate: 0,
-                           transition: { 
-                             duration: 0.3,
-                             ease: "easeInOut"
-                           }
-                         }}
-                       >
-                         <m.icon className="w-8 h-8 text-white" />
-                       </motion.div>
-                     </motion.div>
-                     <p className="text-4xl font-bold text-white mb-2">{m.value}</p>
-                     <p className="text-gray-300 font-medium">{m.label}</p>
-                   </motion.div>
-                 </GlowingCard>
-               );
-             })}
-          </GlowingCards>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {metrics.map((m, index) => {
+              return (
+                <motion.div
+                  key={m.label}
+                  initial={{ opacity: 0, y: 50, scale: 0.8 }}
+                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                  transition={{ 
+                    duration: 0.8, 
+                    delay: index * 0.2, // Each card appears 0.2s after the previous
+                    ease: "easeOut",
+                    type: "spring",
+                    stiffness: 100,
+                    damping: 15
+                  }}
+                  className="group"
+                >
+                  <motion.div 
+                    className="bg-gradient-to-br from-gray-800 to-gray-900 border border-gray-700 hover:border-rose-500 p-8 text-center rounded-2xl transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-rose-500/20 relative overflow-hidden group perspective-1000"
+                    whileHover={{ 
+                      scale: 1.05,
+                      rotateY: 5,
+                      rotateX: 2,
+                      transition: { duration: 0.3, ease: "easeOut" }
+                    }}
+                    style={{ transformStyle: "preserve-3d" }}
+                  >
+                    {/* 3D Background Layers */}
+                    <motion.div 
+                      className="absolute inset-0 bg-gradient-to-br from-rosewood-900/20 via-rosewood-800/20 to-rosewood-700/20 opacity-0 group-hover:opacity-100"
+                      animate={{
+                        background: [
+                          "linear-gradient(135deg, rgba(157, 23, 77, 0.2), rgba(153, 27, 27, 0.2))",
+                          "linear-gradient(135deg, rgba(153, 27, 27, 0.2), rgba(157, 23, 77, 0.2))",
+                          "linear-gradient(135deg, rgba(157, 23, 77, 0.2), rgba(153, 27, 27, 0.2))",
+                        ]
+                      }}
+                      transition={{
+                        duration: 4,
+                        repeat: Infinity,
+                        ease: "linear"
+                      }}
+                    />
+
+                    {/* Floating particles effect */}
+                    <motion.div 
+                      className="absolute inset-0 opacity-0 group-hover:opacity-100"
+                      initial={{ opacity: 0 }}
+                      whileHover={{ opacity: 1 }}
+                      transition={{ duration: 0.5 }}
+                    >
+                      {[...Array(6)].map((_, i) => (
+                        <motion.div
+                          key={i}
+                          className="absolute w-1 h-1 bg-[#9d174d] rounded-full"
+                          style={{
+                            left: `${20 + i * 15}%`,
+                            top: `${30 + i * 10}%`,
+                          }}
+                          animate={{
+                            y: [0, -20, 0],
+                            opacity: [0, 1, 0],
+                            scale: [0, 1, 0],
+                          }}
+                          transition={{
+                            duration: 2,
+                            delay: i * 0.2,
+                            repeat: Infinity,
+                            ease: "easeInOut"
+                          }}
+                        />
+                      ))}
+                    </motion.div>
+
+                    {/* Animated border glow */}
+                    <motion.div 
+                      className="absolute inset-0 rounded-2xl bg-gradient-to-r from-[#9d174d]/20 via-[#991b1b]/20 to-[#9d174d]/20 opacity-0 group-hover:opacity-100"
+                      animate={{
+                        background: [
+                          "linear-gradient(45deg, rgba(157, 23, 77, 0.2), rgba(153, 27, 27, 0.2), rgba(157, 23, 77, 0.2))",
+                          "linear-gradient(45deg, rgba(153, 27, 27, 0.2), rgba(157, 23, 77, 0.2), rgba(153, 27, 27, 0.2))",
+                          "linear-gradient(45deg, rgba(157, 23, 77, 0.2), rgba(153, 27, 27, 0.2), rgba(157, 23, 77, 0.2))",
+                        ]
+                      }}
+                      transition={{
+                        duration: 3,
+                        repeat: Infinity,
+                        ease: "linear"
+                      }}
+                    />
+
+                    {/* Magnetic effect container */}
+                    <motion.div 
+                      className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-[#9d174d] to-[#991b1b] flex items-center justify-center group-hover:scale-110 group-hover:-translate-y-2 transition-all duration-300 relative"
+                      initial={{ scale: 0, rotate: -180 }}
+                      whileInView={{ scale: 1, rotate: 0 }}
+                      transition={{ 
+                        duration: 0.6, 
+                        delay: index * 0.2 + 0.3,
+                        ease: "easeOut",
+                        type: "spring",
+                        stiffness: 200,
+                        damping: 10
+                      }}
+                      whileHover={{
+                        boxShadow: "0 0 30px rgba(157, 23, 77, 0.5)",
+                        transition: { duration: 0.3 }
+                      }}
+                      drag
+                      dragConstraints={{ left: -10, right: 10, top: -10, bottom: 10 }}
+                      dragElastic={0.1}
+                    >
+                      {/* Icon pulse effect */}
+                      <motion.div
+                        className="absolute inset-0 rounded-full bg-[#9d174d]/30"
+                        animate={{
+                          scale: [1, 1.2, 1],
+                          opacity: [0.3, 0, 0.3],
+                        }}
+                        transition={{
+                          duration: 2,
+                          repeat: Infinity,
+                          ease: "easeInOut"
+                        }}
+                      />
+                      
+                      <motion.div
+                        whileHover={{ rotate: 360 }}
+                        transition={{ duration: 0.6, ease: "easeInOut" }}
+                      >
+                        <m.icon className="w-8 h-8 text-white relative z-10" />
+                      </motion.div>
+                    </motion.div>
+                    
+                    {/* Animated value with counting effect */}
+                    <motion.div 
+                      className="relative"
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      transition={{ 
+                        duration: 0.5, 
+                        delay: index * 0.2 + 0.5,
+                        ease: "easeOut"
+                      }}
+                    >
+                      <motion.p 
+                        className="text-4xl font-bold text-white mb-2 relative"
+                        whileHover={{ 
+                          scale: 1.05,
+                          textShadow: "0 0 20px rgba(255, 255, 255, 0.5)",
+                          transition: { duration: 0.3 }
+                        }}
+                      >
+                        {/* Animated underline */}
+                        <motion.span
+                          className="block w-0 h-0.5 bg-gradient-to-r from-[#9d174d] to-[#991b1b] mx-auto mt-2"
+                          whileHover={{ width: "100%" }}
+                          transition={{ duration: 0.5, ease: "easeOut" }}
+                        />
+                        {m.value}
+                      </motion.p>
+                      
+                      {/* Floating numbers effect */}
+                      <motion.div
+                        className="absolute inset-0 opacity-0 group-hover:opacity-100 pointer-events-none"
+                        initial={{ opacity: 0 }}
+                        whileHover={{ opacity: 1 }}
+                      >
+                        {[...Array(5)].map((_, i) => (
+                          <motion.span
+                            key={i}
+                            className="absolute text-xs text-[#9d174d] font-mono"
+                            style={{
+                              left: `${Math.random() * 80 + 10}%`,
+                              top: `${Math.random() * 60 + 20}%`,
+                            }}
+                            animate={{
+                              y: [-10, -30],
+                              opacity: [0, 1, 0],
+                              scale: [0.8, 1.2, 0.8],
+                            }}
+                            transition={{
+                              duration: 2,
+                              delay: i * 0.3,
+                              repeat: Infinity,
+                              ease: "easeOut"
+                            }}
+                          >
+                            {Math.floor(Math.random() * 9) + 1}
+                          </motion.span>
+                        ))}
+                      </motion.div>
+                    </motion.div>
+                    
+                    <motion.p 
+                      className="text-gray-300 font-medium relative z-10"
+                      initial={{ opacity: 0, y: 10 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      transition={{ 
+                        duration: 0.5, 
+                        delay: index * 0.2 + 0.7,
+                        ease: "easeOut"
+                      }}
+                      whileHover={{ 
+                        color: "#ffffff",
+                        transition: { duration: 0.3 }
+                      }}
+                    >
+                      {m.label}
+                    </motion.p>
+
+                    {/* Corner accent */}
+                    <motion.div 
+                      className="absolute top-2 right-2 w-3 h-3 bg-gradient-to-r from-[#9d174d] to-[#991b1b] rounded-full opacity-0 group-hover:opacity-100"
+                      whileHover={{ scale: 1.5 }}
+                      transition={{ duration: 0.3 }}
+                    />
+
+                    {/* Bottom glow line */}
+                  </motion.div>
+                </motion.div>
+              );
+            })}
+          </div>
         </motion.div>
 
         {/* CTA Section */}
