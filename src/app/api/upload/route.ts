@@ -57,6 +57,12 @@ export async function POST(request: NextRequest) {
     const fileName = generateFileName(file.name);
     const buffer = Buffer.from(await file.arrayBuffer());
 
+    // Convert buffer to base64
+    const base64Data = buffer.toString('base64');
+    const mimeType = file.type;
+    const base64Url = `data:${mimeType};base64,${base64Data}`;
+
+    // Still upload to Wasabi for backup/storage purposes
     const uploadParams = {
       Bucket: 'blogs01',
       Key: fileName,
@@ -71,18 +77,13 @@ export async function POST(request: NextRequest) {
 
     const result = await s3.upload(uploadParams).promise();
 
-    // Generate a presigned URL for the uploaded image (valid for 1 hour)
-    const presignedUrl = s3.getSignedUrl('getObject', {
-      Bucket: 'blogs01',
-      Key: fileName,
-      Expires: 3600 // 1 hour in seconds
-    });
-
     return NextResponse.json({
       success: true,
-      url: presignedUrl,
+      url: base64Url, // Return base64 URL instead of presigned URL
       fileName: fileName,
-      permanentUrl: result.Location // Keep the permanent URL for reference
+      permanentUrl: result.Location, // Keep the permanent URL for reference
+      base64Data: base64Data, // Also return raw base64 data if needed
+      mimeType: mimeType
     });
 
   } catch (error: any) {
