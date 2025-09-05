@@ -5,49 +5,6 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 // Register ScrollTrigger plugin
 gsap.registerPlugin(ScrollTrigger);
 
-// export const useStickyHeroAnimation = () => {
-//   const heroRef = useRef<HTMLDivElement>(null);
-//   const sectionsRef = useRef<HTMLDivElement>(null);
-
-//   useEffect(() => {
-//     if (!heroRef.current || !sectionsRef.current) return;
-
-//     const hero = heroRef.current;
-//     const sections = sectionsRef.current;
-
-//     // Initial setup - position sections below hero
-//     gsap.set(sections, { y: '0vh' });
-
-//     // Set up the sticky hero animation
-//     const tl = gsap.timeline({
-//       scrollTrigger: {
-//         trigger: sections,
-//         start: 'top top',
-//         end: '+=100%',
-//         scrub: 1,
-//         pin: hero,
-//         pinSpacing: false,
-//         markers: false, // Set to true for debugging
-//       }
-//     });
-
-//     // Animate sections sliding over the hero
-//     tl.to(sections, {
-//       y: 0,
-//       ease: 'power2.out',
-//       duration: 1
-//     });
-
-//     // Cleanup function
-//     return () => {
-//       ScrollTrigger.getAll().forEach(trigger => trigger.kill());
-//     };
-//   }, []);
-
-//   return { heroRef, sectionsRef };
-// };
-
-
 export const useStickyHeroAnimation = () => {
     const heroRef = useRef<HTMLDivElement>(null);
     const sectionsRef = useRef<HTMLDivElement>(null);

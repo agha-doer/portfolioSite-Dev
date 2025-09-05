@@ -85,30 +85,32 @@ export const CodeBlock = ({
           </div>
         )}
       </div>
-      <SyntaxHighlighter
-        language={activeLanguage}
-        style={atomDark}
-        customStyle={{
-          margin: 0,
-          padding: 0,
-          background: "transparent",
-          fontSize: "0.875rem", // text-sm equivalent
-        }}
-        wrapLines={true}
-        showLineNumbers={true}
-        lineProps={(lineNumber) => ({
-          style: {
-            backgroundColor: activeHighlightLines.includes(lineNumber)
-              ? "rgba(255,255,255,0.1)"
-              : "transparent",
-            display: "block",
-            width: "100%",
-          },
-        })}
-        PreTag="div"
-      >
-        {String(activeCode)}
-      </SyntaxHighlighter>
+      <div className="max-h-[400px] overflow-y-auto scrollbar-thin scrollbar-thumb-rosewood-600 hover:scrollbar-thumb-rosewood-500 scrollbar-track-slate-800/50">
+        <SyntaxHighlighter
+          language={activeLanguage}
+          style={atomDark}
+          customStyle={{
+            margin: 0,
+            padding: 0,
+            background: "transparent",
+            fontSize: "0.875rem", // text-sm equivalent
+          }}
+          wrapLines={true}
+          showLineNumbers={true}
+          lineProps={(lineNumber) => ({
+            style: {
+              backgroundColor: activeHighlightLines.includes(lineNumber)
+                ? "rgba(255,255,255,0.1)"
+                : "transparent",
+              display: "block",
+              width: "100%",
+            },
+          })}
+          PreTag="div"
+        >
+          {String(activeCode)}
+        </SyntaxHighlighter>
+      </div>
     </div>
   );
 };

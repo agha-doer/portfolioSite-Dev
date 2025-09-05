@@ -17,8 +17,10 @@ export default {
 		},
 		extend: {
 			fontFamily: {
-				'display': ['Inter', 'sans-serif'],
-				'body': ['Inter', 'sans-serif'],
+				'display': ['var(--font-outfit)', 'Outfit', 'sans-serif'],
+				'body': ['var(--font-outfit)', 'Outfit', 'sans-serif'],
+				'outfit': ['var(--font-outfit)', 'Outfit', 'sans-serif'],
+				'sans': ['var(--font-outfit)', 'Outfit', 'sans-serif'],
 			},
 			colors: {
 				// Custom Theme Colors

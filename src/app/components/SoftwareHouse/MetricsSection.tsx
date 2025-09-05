@@ -245,8 +245,8 @@ const MetricsSection: React.FC = () => {
                             key={i}
                             className="absolute text-xs text-[#9d174d] font-mono"
                             style={{
-                              left: `${Math.random() * 80 + 10}%`,
-                              top: `${Math.random() * 60 + 20}%`,
+                              left: `${15 + i * 15}%`,
+                              top: `${25 + i * 8}%`,
                             }}
                             animate={{
                               y: [-10, -30],
@@ -260,7 +260,7 @@ const MetricsSection: React.FC = () => {
                               ease: "easeOut"
                             }}
                           >
-                            {Math.floor(Math.random() * 9) + 1}
+                            {i + 1}
                           </motion.span>
                         ))}
                       </motion.div>

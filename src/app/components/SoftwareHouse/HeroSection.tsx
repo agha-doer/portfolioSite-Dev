@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowDown, Code, Zap, Shield, Rocket } from 'lucide-react';
 import { useParallax } from '../../hooks/useScrollAnimation';
@@ -7,12 +7,37 @@ import ImageMask from '../ImageMask';
 
 const HeroSection = () => {
   const parallaxOffset = useParallax(0.3);
+  const [selectedFeature, setSelectedFeature] = useState(0);
 
   const features = [
-    { icon: Code, text: 'Modern Tech Stack' },
-    { icon: Zap, text: 'Lightning Fast' },
-    { icon: Shield, text: 'Enterprise Grade' },
-    { icon: Rocket, text: 'Scalable Solutions' },
+    { 
+      icon: Code, 
+      text: 'Modern Tech Stack',
+      title: 'Innovation Hub',
+      description: 'Where ideas become reality',
+      iconComponent: Code
+    },
+    { 
+      icon: Zap, 
+      text: 'Lightning Fast',
+      title: 'Speed Engine',
+      description: 'Lightning-fast performance',
+      iconComponent: Zap
+    },
+    { 
+      icon: Shield, 
+      text: 'Enterprise Grade',
+      title: 'Security Fortress',
+      description: 'Enterprise-grade protection',
+      iconComponent: Shield
+    },
+    { 
+      icon: Rocket, 
+      text: 'Scalable Solutions',
+      title: 'Growth Platform',
+      description: 'Scale with confidence',
+      iconComponent: Rocket
+    },
   ];
 
   return (
@@ -159,28 +184,16 @@ const HeroSection = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.8 }}
             >
-              {/* {features.map((feature, index) => (
-                <motion.div
-                  key={feature.text}
-                  className="pill-animated flex items-center space-x-2 px-4 py-2 rounded-full shadow-soft"
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.5, delay: 1 + index * 0.1 }}
-                  whileHover={{ scale: 1.05 }}
-                >
-                  <feature.icon className="w-5 h-5 text-rosewood-800" />
-                  <span className="text-sm font-medium text-gray-700">{feature.text}</span>
-                </motion.div>
-              ))} */}
 
 {features.map((feature, index) => (
   <motion.div
     key={feature.text}
-    className="group pill-animated flex items-center space-x-2 px-4 py-2 rounded-full shadow-soft"
+    className="group pill-animated flex items-center space-x-2 px-4 py-2 rounded-full shadow-soft cursor-pointer"
     initial={{ opacity: 0, x: -20 }}
     animate={{ opacity: 1, x: 0 }}
     transition={{ duration: 0.5, delay: 1 + index * 0.1 }}
     whileHover={{ scale: 1.05 }}
+    onClick={() => setSelectedFeature(index)}
   >
     <feature.icon className="w-5 h-5 text-rosewood-800 group-hover:text-white transition-colors duration-200" />
     <span className="text-sm font-medium text-gray-700 group-hover:text-white transition-colors duration-200">
@@ -203,6 +216,7 @@ const HeroSection = () => {
               <div className="flex items-center justify-center h-full">
                 <div className="text-center">
                   <motion.div
+                    key={selectedFeature}
                     className="w-32 h-32 bg-gradient-primary rounded-full mx-auto mb-6 flex items-center justify-center"
                     animate={{
                       scale: [1, 1.1, 1],
@@ -213,10 +227,26 @@ const HeroSection = () => {
                       rotate: { duration: 20, repeat: Infinity, ease: 'linear' },
                     }}
                   >
-                    <Code className="w-16 h-16 text-white" />
+                    {React.createElement(features[selectedFeature].iconComponent, { className: "w-16 h-16 text-white" })}
                   </motion.div>
-                  <h3 className="text-2xl font-display text-white mb-2">Innovation Hub</h3>
-                  <p className="text-white/80">Where ideas become reality</p>
+                  <motion.h3 
+                    key={`title-${selectedFeature}`}
+                    className="text-2xl font-display text-gray-800 mb-2 font-bold"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5 }}
+                  >
+                    {features[selectedFeature].title}
+                  </motion.h3>
+                  <motion.p 
+                    key={`desc-${selectedFeature}`}
+                    className="text-gray-600 font-medium"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.1 }}
+                  >
+                    {features[selectedFeature].description}
+                  </motion.p>
                 </div>
               </div>
             </ImageMask>
