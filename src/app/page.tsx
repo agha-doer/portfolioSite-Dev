@@ -3,37 +3,26 @@
 import { useEffect } from 'react';
 import Navigation from './components/Navigation';
 import ErrorBoundary from './components/ErrorBoundary';
-import ScrollProgress from './components/ScrollProgress';
-import StickyButton from './components/StickyButton';
+
 import AdvancedStickyButton from './components/AdvancedStickyButton';
 import HeroSection from './components/SoftwareHouse/HeroSection';
 import FeaturedInsightsSection from './components/SoftwareHouse/FeaturedInsightsSection';
 import ServicesSection from './components/SoftwareHouse/ServicesSection';
-import AboutSection from './components/AboutSection';
 import ProjectsSection from './components/ProjectsSection';
 import ContactSection from './components/ContactSection';
 import Footer from './components/Footer';
-import TestimonialsSection from './components/SoftwareHouse/TestimonialsSection';
-import CaseStudiesSection from './components/SoftwareHouse/CaseStudiesSection';
-import TeamSection from './components/SoftwareHouse/TeamSection';
 import FAQSection from './components/SoftwareHouse/FAQSection';
-import GearsBackground from './components/GearsBackground';
 import TechStackSection from './components/SoftwareHouse/TechStackSection';
-import PartnersSection from './components/SoftwareHouse/PartnersSection';
-import BlogCarouselSection from './components/SoftwareHouse/BlogCarouselSection';
 import GallerySection from './components/SoftwareHouse/GallerySection';
 import MetricsSection from './components/SoftwareHouse/MetricsSection';
 import ProcessSection from './components/SoftwareHouse/ProcessSection';
-import PricingSection from './components/SoftwareHouse/PricingSection';
 import TimelineSection from './components/SoftwareHouse/TimelineSection';
-import AwardsSection from './components/SoftwareHouse/AwardsSection';
-import CareersSection from './components/SoftwareHouse/CareersSection';
-import AnimatedBorderDemo from './components/ui/animated-border-demo';
 import { useStickyHeroAnimation } from './hooks/useStickyHeroAnimation';
 import { useMorphismAnimation } from './hooks/useMorphismAnimation';
 import CarouselSection from './components/SoftwareHouse/CarouselSection';
-import GlowingCardsDemo from './components/SoftwareHouse/GlowingCardsDemo';
 import { SparkleParticles } from './components/SparkleParticles';
+import CodeBlockSection from './components/CodeBlockSection';
+import ThreeDImageRingGallery from './components/3DImageRingGallery';
 
 export default function Home() {
   const { heroRef, sectionsRef } = useStickyHeroAnimation();
@@ -101,22 +90,15 @@ export default function Home() {
           <TechStackSection />
           <MetricsSection />
           <ProcessSection />
-          <PricingSection />
           <TimelineSection />
           <div id="portfolio">
             <ProjectsSection />
           </div>
-          
-          <GallerySection />
-          <TestimonialsSection />
-          <CaseStudiesSection />
+          <CodeBlockSection />
+          <ThreeDImageRingGallery />
+          {/* <GallerySection /> */}
           {/* <TeamSection /> */}
-          <BlogCarouselSection />
-
-          <AwardsSection />
-          <AboutSection />
           <FAQSection />
-          <CareersSection />
           <ContactSection />
         </div>
       </main>
