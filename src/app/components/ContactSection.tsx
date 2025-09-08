@@ -8,6 +8,7 @@ import { Card } from './ui/card';
 import { Mail, MapPin, Phone, Send } from 'lucide-react';
 import { useToast } from '../hooks/use-toast';
 import AnimatedBorder from './ui/animated-border';
+import { SparkleParticles } from './SparkleParticles';
 
 const ContactSection = () => {
   const { ref, isVisible } = useScrollAnimation(0.2);
@@ -197,20 +198,38 @@ const ContactSection = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
               transition={{ duration: 0.8, delay: 0.8 }}
-              className="bg-gradient-primary rounded-xl p-6 text-white"
+              className="bg-gradient-primary rounded-xl p-6 text-white relative overflow-hidden"
             >
-              <h4 className="text-white font-display text-xl font-bold mb-3">
-                Ready to start your project?
-              </h4>
-              <p className="mb-4 opacity-90 text-white">
-                Let's discuss your ideas and bring them to life with cutting-edge technology.
-              </p>
-              <Button
-                variant="secondary"
-                className="text-gradient-primary bg-background/20 text-primary-foreground border-background/30 hover:bg-background/30"
-              >
-                Schedule a Call
-              </Button>
+              {/* Sparkle Particles */}
+              <SparkleParticles
+                className="absolute inset-0"
+                particleColor="#ffffff"
+                maxParticleSize={1.5}
+                baseDensity={30}
+                maxSpeed={0.6}
+                maxOpacity={0.4}
+                enableHoverGrab={true}
+                hoverMode="grab"
+                clickEffect={true}
+                particleShape="circle"
+                enableParallax={true}
+                zIndexLevel={1}
+              />
+              
+              <div className="relative z-10">
+                <h4 className="text-white font-display text-xl font-bold mb-3">
+                  Ready to start your project?
+                </h4>
+                <p className="mb-4 opacity-90 text-white">
+                  Let's discuss your ideas and bring them to life with cutting-edge technology.
+                </p>
+                <Button
+                  variant="secondary"
+                  className="text-gradient-primary bg-background/20 text-primary-foreground border-background/30 hover:bg-background/30"
+                >
+                  Schedule a Call
+                </Button>
+              </div>
             </motion.div>
           </motion.div>
         </div>
