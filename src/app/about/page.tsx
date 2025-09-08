@@ -135,47 +135,227 @@ export default function About() {
           </div>
         </section>
 
-        {/* Team Section */}
-        <section className="py-20 bg-gradient-to-br from-gray-50 to-white">
-          <div className="container mx-auto px-6">
+        {/* Carousel Section */}
+        <section 
+          className="relative min-h-screen flex items-center py-20 bg-fixed bg-cover bg-center"
+          style={{
+            backgroundImage: "url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80')",
+            backgroundAttachment: "fixed"
+          }}
+        >
+          {/* Dark Overlay */}
+          <div className="absolute inset-0 bg-black/60"></div>
+          <div className="container mx-auto px-6 relative z-10">
             <motion.div
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
               className="text-center mb-16"
             >
-              <h2 className="text-4xl font-bold text-gray-900 mb-6">Our Team</h2>
-              <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-                Meet the talented individuals behind our success
+              <h2 className="text-4xl font-bold text-white mb-6">Trusted Collaborators</h2>
+              <p className="text-xl text-gray-200 max-w-3xl mx-auto">
+                One of the most important values embodied by our team is our relationship with our clients. 
+                Software development is, by its nature, a collaborative and iterative process that requires 
+                many different people from different disciplines coming together to solve complex problems.
               </p>
             </motion.div>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-              {[
-                { name: 'Sarah Johnson', role: 'CEO & Founder', image: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80' },
-                { name: 'Michael Chen', role: 'CTO', image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80' },
-                { name: 'Emily Rodriguez', role: 'Lead Designer', image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80' },
-                { name: 'David Kim', role: 'Senior Developer', image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80' }
-              ].map((member, index) => (
-                <motion.div
-                  key={member.name}
-                  initial={{ opacity: 0, y: 50 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: index * 0.1 }}
-                  className="text-center"
-                >
-                  <div className="w-32 h-32 mx-auto mb-4 rounded-full overflow-hidden shadow-medium">
-                    <img 
-                      src={member.image} 
-                      alt={member.name}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  <h3 className="text-lg font-bold text-gray-900 mb-2">{member.name}</h3>
-                  <p className="text-gray-600">{member.role}</p>
-                </motion.div>
-              ))}
-            </div>
+            {/* Carousel Container */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="relative"
+            >
+              {/* Background Elements */}
+              <div className="absolute inset-0 opacity-10">
+                <div className="absolute top-10 left-10 w-32 h-32 bg-gradient-to-br from-rosewood-500 to-transparent rounded-full blur-3xl"></div>
+                <div className="absolute bottom-10 right-10 w-40 h-40 bg-gradient-to-br from-carmine-500 to-transparent rounded-full blur-3xl"></div>
+              </div>
+
+              {/* Main Carousel Content */}
+              <div className="bg-white/80 backdrop-blur-sm rounded-3xl shadow-2xl p-12 relative z-10">
+                <div className="grid lg:grid-cols-2 gap-12 items-center">
+                  {/* Left Side - 3D TEAM Letters */}
+                  <motion.div
+                    className="flex justify-center items-center"
+                    initial={{ opacity: 0, x: -100 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 1, delay: 0.4 }}
+                  >
+                    <div className="flex space-x-4">
+                      {['T', 'E', 'A', 'M'].map((letter, index) => (
+                        <motion.div
+                          key={letter}
+                          className="relative"
+                          initial={{ opacity: 0, y: 50, rotateY: -90 }}
+                          whileInView={{ opacity: 1, y: 0, rotateY: 0 }}
+                          transition={{ 
+                            duration: 0.8, 
+                            delay: 0.6 + index * 0.1,
+                            type: "spring",
+                            stiffness: 100
+                          }}
+                          whileHover={{ 
+                            scale: 1.1, 
+                            rotateY: 10,
+                            transition: { duration: 0.3 }
+                          }}
+                          style={{ transformStyle: "preserve-3d" }}
+                        >
+                          {/* 3D Letter */}
+                          <div className="relative w-16 h-20 md:w-20 md:h-24">
+                            {/* Main Letter Face */}
+                            <div 
+                              className={`absolute inset-0 rounded-lg flex items-center justify-center text-4xl md:text-5xl font-bold text-white shadow-xl ${
+                                index === 0 ? 'bg-gradient-to-br from-red-500 to-red-600' :
+                                index === 1 ? 'bg-gradient-to-br from-green-500 to-green-600' :
+                                index === 2 ? 'bg-gradient-to-br from-yellow-500 to-yellow-600' :
+                                'bg-gradient-to-br from-blue-500 to-blue-600'
+                              }`}
+                              style={{ 
+                                transform: "translateZ(8px)",
+                                boxShadow: "0 8px 32px rgba(0,0,0,0.3)"
+                              }}
+                            >
+                              {letter}
+                            </div>
+                            
+                            {/* 3D Depth Effect */}
+                            <div 
+                              className={`absolute inset-0 rounded-lg ${
+                                index === 0 ? 'bg-gradient-to-br from-red-600 to-red-700' :
+                                index === 1 ? 'bg-gradient-to-br from-green-600 to-green-700' :
+                                index === 2 ? 'bg-gradient-to-br from-yellow-600 to-yellow-700' :
+                                'bg-gradient-to-br from-blue-600 to-blue-700'
+                              }`}
+                              style={{ 
+                                transform: "translateZ(0px) translateY(4px) translateX(4px)",
+                                zIndex: -1
+                              }}
+                            />
+                            
+                            {/* Glow Effect */}
+                            <motion.div
+                              className={`absolute inset-0 rounded-lg opacity-0 ${
+                                index === 0 ? 'bg-red-400' :
+                                index === 1 ? 'bg-green-400' :
+                                index === 2 ? 'bg-yellow-400' :
+                                'bg-blue-400'
+                              }`}
+                              animate={{
+                                opacity: [0, 0.3, 0],
+                                scale: [1, 1.1, 1],
+                              }}
+                              transition={{
+                                duration: 2,
+                                delay: index * 0.5,
+                                repeat: Infinity,
+                                ease: "easeInOut"
+                              }}
+                              style={{ 
+                                filter: "blur(8px)",
+                                zIndex: -2
+                              }}
+                            />
+                          </div>
+                        </motion.div>
+                      ))}
+                    </div>
+                  </motion.div>
+
+                  {/* Right Side - Content */}
+                  <motion.div
+                    initial={{ opacity: 0, x: 100 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 1, delay: 0.6 }}
+                    className="space-y-6"
+                  >
+                    <div className="space-y-4">
+                      <h3 className="text-2xl font-bold text-black font-sans">
+                        Collaborative Excellence
+                      </h3>
+                      <p className="text-black leading-relaxed font-body">
+                        Because of this, we work closely with our clients to realize their vision, 
+                        integrate their feedback into their projects, and help them effectively bring 
+                        their business software to market.
+                      </p>
+                    </div>
+
+                    {/* Feature Pills */}
+                    <div className="flex flex-wrap gap-3">
+                      {[
+                        { label: 'Agile Development', color: 'bg-red-100 text-red-700' },
+                        { label: 'Client Feedback', color: 'bg-green-100 text-green-700' },
+                        { label: 'Iterative Process', color: 'bg-yellow-100 text-yellow-700' },
+                        { label: 'Market Ready', color: 'bg-blue-100 text-blue-700' }
+                      ].map((pill, index) => (
+                        <motion.span
+                          key={pill.label}
+                          initial={{ opacity: 0, scale: 0 }}
+                          whileInView={{ opacity: 1, scale: 1 }}
+                          transition={{ 
+                            duration: 0.5, 
+                            delay: 0.8 + index * 0.1,
+                            type: "spring",
+                            stiffness: 150
+                          }}
+                          whileHover={{ scale: 1.05 }}
+                          className={`px-4 py-2 rounded-full text-sm font-medium ${pill.color} cursor-default`}
+                        >
+                          {pill.label}
+                        </motion.span>
+                      ))}
+                    </div>
+
+                    {/* Call to Action */}
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.8, delay: 1.2 }}
+                      className="pt-4"
+                    >
+                      <motion.button
+                        className="bg-gradient-to-r from-rosewood-600 to-carmine-600 text-white px-8 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
+                        whileHover={{ 
+                          scale: 1.05,
+                          boxShadow: "0 20px 40px rgba(157, 23, 77, 0.3)"
+                        }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        Start Collaborating
+                      </motion.button>
+                    </motion.div>
+                  </motion.div>
+                </div>
+              </div>
+
+              {/* Floating Elements */}
+              <motion.div
+                className="absolute top-20 right-10 w-4 h-4 bg-rosewood-400 rounded-full opacity-60"
+                animate={{
+                  y: [0, -20, 0],
+                  scale: [1, 1.2, 1],
+                }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+              />
+              <motion.div
+                className="absolute bottom-20 left-10 w-6 h-6 bg-carmine-400 rounded-full opacity-60"
+                animate={{
+                  y: [0, 20, 0],
+                  scale: [1, 0.8, 1],
+                }}
+                transition={{
+                  duration: 4,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+              />
+            </motion.div>
           </div>
         </section>
 

@@ -1,5 +1,4 @@
 import { motion } from 'framer-motion';
-import { useEffect, useRef, useState } from 'react';
 
 interface ImageMaskProps {
   className?: string;
@@ -7,40 +6,12 @@ interface ImageMaskProps {
 }
 
 const ImageMask = ({ className = '', children }: ImageMaskProps) => {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [isHovered, setIsHovered] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-    
-    const handleMouseMove = (e: MouseEvent) => {
-      if (containerRef.current) {
-        const rect = containerRef.current.getBoundingClientRect();
-        const x = ((e.clientX - rect.left) / rect.width) * 100;
-        const y = ((e.clientY - rect.top) / rect.height) * 100;
-        setMousePosition({ x, y });
-      }
-    };
-
-    const container = containerRef.current;
-    if (container) {
-      container.addEventListener('mousemove', handleMouseMove);
-      return () => container.removeEventListener('mousemove', handleMouseMove);
-    }
-  }, []);
 
   return (
     <div
-      ref={containerRef}
       className={`relative overflow-hidden rounded-2xl ${className}`}
       style={{
         background: `
-          radial-gradient(
-            circle at ${mousePosition.x}% ${mousePosition.y}%,
-            rgba(157, 23, 77, 0.3) 0%,
-            transparent 50%
-          ),
           linear-gradient(
             135deg,
             rgba(157, 23, 77, 0.1) 0%,
@@ -49,8 +20,6 @@ const ImageMask = ({ className = '', children }: ImageMaskProps) => {
           )
         `,
       }}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
     >
       {/* Animated Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
@@ -120,13 +89,7 @@ const ImageMask = ({ className = '', children }: ImageMaskProps) => {
         {children}
       </div>
 
-      {/* Hover Overlay */}
-      <motion.div
-        className="absolute inset-0 bg-gradient-to-br from-rosewood-800/20 to-carmine-800/20"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: isHovered ? 1 : 0 }}
-        transition={{ duration: 0.3 }}
-      />
+
 
       {/* Border Glow */}
       <motion.div

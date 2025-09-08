@@ -8,26 +8,312 @@ import { CodeBlock } from "./ui/code-block";
 const CodeBlockSection = () => {
   const { ref, isVisible } = useScrollAnimation(0.2);
 
-  const code = `const DummyComponent = () => {
-  const [count, setCount] = React.useState(0);
+  const code = `import React, { useState, useCallback, useMemo } from 'react';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import { Card, Avatar, Tag, Button, Modal, Form, Input, Select } from 'antd';
+import { UserOutlined, CalendarOutlined, FlagOutlined } from '@ant-design/icons';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
-  const handleClick = () => {
-    setCount(prev => prev + 1);
+interface Task {
+  id: string;
+  title: string;
+  description: string;
+  assignee: string;
+  priority: 'low' | 'medium' | 'high';
+  dueDate: string;
+  tags: string[];
+}
+
+interface Column {
+  id: string;
+  title: string;
+  tasks: Task[];
+}
+
+const KanbanBoard: React.FC = () => {
+  const [columns, setColumns] = useState<Column[]>([
+    {
+      id: 'todo',
+      title: 'To Do',
+      tasks: [
+        {
+          id: '1',
+          title: 'Implement Rich Text Editor',
+          description: 'Integrate Quill.js with advanced formatting',
+          assignee: 'John Doe',
+          priority: 'high',
+          dueDate: '2024-02-15',
+          tags: ['frontend', 'editor']
+        }
+      ]
+    },
+    { id: 'inprogress', title: 'In Progress', tasks: [] },
+    { id: 'done', title: 'Done', tasks: [] }
+  ]);
+
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [editorContent, setEditorContent] = useState('');
+  const [form] = Form.useForm();
+
+  const quillModules = useMemo(() => ({
+    toolbar: [
+      [{ 'header': [1, 2, 3, false] }],
+      ['bold', 'italic', 'underline', 'strike'],
+      [{ 'color': [] }, { 'background': [] }],
+      [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+      [{ 'align': [] }],
+      ['link', 'image', 'code-block'],
+      ['clean']
+    ],
+    clipboard: { matchVisual: false }
+  }), []);
+
+  const onDragEnd = useCallback((result: any) => {
+    const { destination, source, draggableId } = result;
+    
+    if (!destination || 
+        (destination.droppableId === source.droppableId && 
+         destination.index === source.index)) {
+      return;
+    }
+
+    setColumns(prevColumns => {
+      const newColumns = [...prevColumns];
+      const sourceColumn = newColumns.find(col => col.id === source.droppableId);
+      const destColumn = newColumns.find(col => col.id === destination.droppableId);
+      
+      if (!sourceColumn || !destColumn) return prevColumns;
+
+      const [movedTask] = sourceColumn.tasks.splice(source.index, 1);
+      destColumn.tasks.splice(destination.index, 0, movedTask);
+      
+      return newColumns;
+    });
+  }, []);
+
+  const getPriorityColor = (priority: string) => {
+    switch (priority) {
+      case 'high': return '#ff4d4f';
+      case 'medium': return '#faad14';
+      case 'low': return '#52c41a';
+      default: return '#d9d9d9';
+    }
+  };
+
+  const handleCreateTask = async (values: any) => {
+    const newTask: Task = {
+      id: Date.now().toString(),
+      title: values.title,
+      description: editorContent,
+      assignee: values.assignee,
+      priority: values.priority,
+      dueDate: values.dueDate,
+      tags: values.tags || []
+    };
+
+    setColumns(prev => prev.map(col => 
+      col.id === 'todo' 
+        ? { ...col, tasks: [...col.tasks, newTask] }
+        : col
+    ));
+    
+    setIsModalVisible(false);
+    form.resetFields();
+    setEditorContent('');
   };
 
   return (
-    <div className="p-4 border rounded-lg">
-      <h2 className="text-xl font-bold mb-4">Fights Counter</h2>
-      <p className="mb-2">Fight Club Fights Count: {count}</p>
-      <button 
-        onClick={handleClick}
-        className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+    <div className="kanban-container p-6 bg-gray-50 min-h-screen">
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-2xl font-bold">Project Kanban Board</h1>
+        <Button 
+          type="primary" 
+          onClick={() => setIsModalVisible(true)}
+          icon={<FlagOutlined />}
+        >
+          Add Task
+        </Button>
+      </div>
+
+      <DragDropContext onDragEnd={onDragEnd}>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {columns.map(column => (
+            <div key={column.id} className="bg-white rounded-lg shadow-sm p-4">
+              <h3 className="font-semibold mb-4 text-gray-700">
+                {column.title} ({column.tasks.length})
+              </h3>
+              
+              <Droppable droppableId={column.id}>
+                {(provided, snapshot) => (
+                  <div
+                    {...provided.droppableProps}
+                    ref={provided.innerRef}
+                    className={\`min-h-[200px] \${
+                      snapshot.isDraggingOver ? 'bg-blue-50' : ''
+                    }\`}
+                  >
+                    {column.tasks.map((task, index) => (
+                      <Draggable key={task.id} draggableId={task.id} index={index}>
+                        {(provided, snapshot) => (
+                          <div
+                            ref={provided.innerRef}
+                            {...provided.draggableProps}
+                            {...provided.dragHandleProps}
+                            className={\`mb-3 \${
+                              snapshot.isDragging ? 'opacity-75' : ''
+                            }\`}
+                          >
+                            <Card
+                              size="small"
+                              className="shadow-sm hover:shadow-md transition-shadow"
+                              title={
+                                <div className="flex items-center justify-between">
+                                  <span className="text-sm font-medium">
+                                    {task.title}
+                                  </span>
+                                  <Tag color={getPriorityColor(task.priority)}>
+                                    {task.priority}
+                                  </Tag>
+                                </div>
+                              }
+                            >
+                              <div 
+                                className="text-xs text-gray-600 mb-2"
+                                dangerouslySetInnerHTML={{ 
+                                  __html: task.description.slice(0, 100) + '...' 
+                                }}
+                              />
+                              
+                              <div className="flex items-center justify-between">
+                                <div className="flex items-center space-x-2">
+                                  <Avatar 
+                                    size="small" 
+                                    icon={<UserOutlined />} 
+                                  />
+                                  <span className="text-xs">{task.assignee}</span>
+                                </div>
+                                
+                                <div className="flex items-center text-xs text-gray-500">
+                                  <CalendarOutlined className="mr-1" />
+                                  {task.dueDate}
+                                </div>
+                              </div>
+                              
+                              <div className="mt-2">
+                                {task.tags.map(tag => (
+                                  <Tag key={tag} size="small" className="text-xs">
+                                    {tag}
+                                  </Tag>
+                                ))}
+                              </div>
+                            </Card>
+                          </div>
+                        )}
+                      </Draggable>
+                    ))}
+                    {provided.placeholder}
+                  </div>
+                )}
+              </Droppable>
+            </div>
+          ))}
+        </div>
+      </DragDropContext>
+
+      <Modal
+        title="Create New Task"
+        open={isModalVisible}
+        onCancel={() => setIsModalVisible(false)}
+        footer={null}
+        width={800}
       >
-        Increment
-      </button>
+        <Form
+          form={form}
+          layout="vertical"
+          onFinish={handleCreateTask}
+          className="mt-4"
+        >
+          <Form.Item
+            name="title"
+            label="Task Title"
+            rules={[{ required: true, message: 'Please enter task title' }]}
+          >
+            <Input placeholder="Enter task title" />
+          </Form.Item>
+
+          <Form.Item
+            name="description"
+            label="Description"
+            rules={[{ required: true, message: 'Please enter description' }]}
+          >
+            <ReactQuill
+              theme="snow"
+              value={editorContent}
+              onChange={setEditorContent}
+              modules={quillModules}
+              placeholder="Describe your task in detail..."
+              style={{ height: '200px', marginBottom: '50px' }}
+            />
+          </Form.Item>
+
+          <div className="grid grid-cols-2 gap-4">
+            <Form.Item
+              name="assignee"
+              label="Assignee"
+              rules={[{ required: true, message: 'Please select assignee' }]}
+            >
+              <Select placeholder="Select assignee">
+                <Select.Option value="John Doe">John Doe</Select.Option>
+                <Select.Option value="Jane Smith">Jane Smith</Select.Option>
+                <Select.Option value="Mike Johnson">Mike Johnson</Select.Option>
+              </Select>
+            </Form.Item>
+
+            <Form.Item
+              name="priority"
+              label="Priority"
+              rules={[{ required: true, message: 'Please select priority' }]}
+            >
+              <Select placeholder="Select priority">
+                <Select.Option value="low">Low</Select.Option>
+                <Select.Option value="medium">Medium</Select.Option>
+                <Select.Option value="high">High</Select.Option>
+              </Select>
+            </Form.Item>
+          </div>
+
+          <Form.Item
+            name="dueDate"
+            label="Due Date"
+            rules={[{ required: true, message: 'Please select due date' }]}
+          >
+            <Input type="date" />
+          </Form.Item>
+
+          <Form.Item name="tags" label="Tags">
+            <Select
+              mode="tags"
+              placeholder="Add tags"
+              style={{ width: '100%' }}
+            />
+          </Form.Item>
+
+          <div className="flex justify-end space-x-2">
+            <Button onClick={() => setIsModalVisible(false)}>
+              Cancel
+            </Button>
+            <Button type="primary" htmlType="submit">
+              Create Task
+            </Button>
+          </div>
+        </Form>
+      </Modal>
     </div>
   );
-};`;
+};
+
+export default KanbanBoard;`;
 
   return (
     <section ref={ref} className="py-20 bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800">
@@ -57,7 +343,7 @@ const CodeBlockSection = () => {
           <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl p-6">
             <CodeBlock
               language="jsx"
-              filename="DummyComponent.jsx"
+              filename="KanbanBoard.tsx"
               highlightLines={[9, 13, 14, 18]}
               code={code}
             />
@@ -137,81 +423,19 @@ const CodeBlockSection = () => {
             </div>
           </div>
 
-          {/* Right Side - Bundle Size Display */}
+          {/* Right Side - Bundle Analysis Image */}
           <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl p-8">
-            <h4 className="text-2xl font-bold mb-6 text-center">E-commerce Site Bundle Analysis</h4>
-            <div className="space-y-6">
-              {/* Main Bundle */}
-              <div className="bg-gradient-to-r from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 rounded-lg p-4">
-                <div className="flex justify-between items-center mb-2">
-                  <span className="font-semibold">Main Bundle</span>
-                  <span className="text-sm text-muted-foreground">JavaScript</span>
-                </div>
-                <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3">
-                  <div className="bg-blue-500 h-3 rounded-full" style={{ width: '45%' }}></div>
-                </div>
-                <div className="flex justify-between text-sm mt-1">
-                  <span>45%</span>
-                  <span>234 KB</span>
-                </div>
-              </div>
-
-              {/* CSS Bundle */}
-              <div className="bg-gradient-to-r from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-800/20 rounded-lg p-4">
-                <div className="flex justify-between items-center mb-2">
-                  <span className="font-semibold">CSS Bundle</span>
-                  <span className="text-sm text-muted-foreground">Styles</span>
-                </div>
-                <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3">
-                  <div className="bg-green-500 h-3 rounded-full" style={{ width: '25%' }}></div>
-                </div>
-                <div className="flex justify-between text-sm mt-1">
-                  <span>25%</span>
-                  <span>128 KB</span>
-                </div>
-              </div>
-
-              {/* Images */}
-              <div className="bg-gradient-to-r from-purple-50 to-purple-100 dark:from-purple-900/20 dark:to-purple-800/20 rounded-lg p-4">
-                <div className="flex justify-between items-center mb-2">
-                  <span className="font-semibold">Images</span>
-                  <span className="text-sm text-muted-foreground">Optimized</span>
-                </div>
-                <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3">
-                  <div className="bg-purple-500 h-3 rounded-full" style={{ width: '20%' }}></div>
-                </div>
-                <div className="flex justify-between text-sm mt-1">
-                  <span>20%</span>
-                  <span>102 KB</span>
-                </div>
-              </div>
-
-              {/* Other Assets */}
-              <div className="bg-gradient-to-r from-orange-50 to-orange-100 dark:from-orange-900/20 dark:to-orange-800/20 rounded-lg p-4">
-                <div className="flex justify-between items-center mb-2">
-                  <span className="font-semibold">Other Assets</span>
-                  <span className="text-sm text-muted-foreground">Fonts, Icons</span>
-                </div>
-                <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3">
-                  <div className="bg-orange-500 h-3 rounded-full" style={{ width: '10%' }}></div>
-                </div>
-                <div className="flex justify-between text-sm mt-1">
-                  <span>10%</span>
-                  <span>52 KB</span>
-                </div>
-              </div>
-
-              {/* Total Size */}
-              <div className="border-t pt-4 mt-6">
-                <div className="flex justify-between items-center">
-                  <span className="text-lg font-bold">Total Bundle Size</span>
-                  <span className="text-2xl font-bold text-primary">516 KB</span>
-                </div>
-                <p className="text-sm text-muted-foreground mt-1">
-                  Optimized for fast loading and excellent performance
-                </p>
-              </div>
+            <h4 className="text-2xl font-bold mb-6 text-center">Bundle Analysis</h4>
+            <div className="flex justify-center items-center">
+              <img 
+                src="/analyzer.png" 
+                alt="Bundle Analysis Chart" 
+                className="max-w-full h-auto rounded-lg shadow-md"
+              />
             </div>
+            <p className="text-sm text-muted-foreground mt-4 text-center">
+              Real-time bundle analysis and optimization insights
+            </p>
           </div>
         </motion.div>
       </div>
