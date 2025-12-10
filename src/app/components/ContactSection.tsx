@@ -10,7 +10,12 @@ import { useToast } from '../hooks/use-toast';
 import AnimatedBorder from './ui/animated-border';
 import { SparkleParticles } from './SparkleParticles';
 
-const ContactSection = () => {
+interface ContactSectionProps {
+  hideDescription?: boolean;
+  hideMargin?: boolean;
+}
+
+const ContactSection = ({ hideDescription = false, hideMargin = false }: ContactSectionProps) => {
   const { ref, isVisible } = useScrollAnimation(0.2);
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -57,15 +62,17 @@ const ContactSection = () => {
           initial={{ opacity: 0, y: 50 }}
           animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
           transition={{ duration: 0.8 }}
-          className="text-center mb-16"
+          className={`text-center ${hideMargin ? '' : 'mb-16'}`}
         >
           <h2 className="font-display text-4xl md:text-5xl font-bold mb-6">
             Let's <span className="text-gradient-primary">Connect</span>
           </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-            Have a project in mind or just want to chat? I'd love to hear from you. 
-            Let's create something amazing together.
-          </p>
+          {!hideDescription && (
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+              Have a project in mind or just want to chat? I'd love to hear from you. 
+              Let's create something amazing together.
+            </p>
+          )}
         </motion.div>
 
         <div className="grid lg:grid-cols-2 gap-12">
