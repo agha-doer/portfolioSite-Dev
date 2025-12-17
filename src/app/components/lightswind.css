@@ -51,9 +51,9 @@
   --radius: 0.5rem; /* For rounded corners */
 
   /* Scrollbar colors */
-  --scrollbar-thumb: 0 0% 75%;
-  --scrollbar-track: 0 0% 95%;
-  --scrollbar-hover: 0 0% 65%;
+  --scrollbar-thumb: 345 83% 35%;
+  --scrollbar-track: 0 40% 8%;
+  --scrollbar-hover: 345 83% 25%;
 
   /* Custom named colors */
   --greedy: #07eae6ff;
@@ -96,9 +96,9 @@
   --ring: 0 0% 20%;
 
   /* Scrollbar colors for dark mode */
-  --scrollbar-thumb: 0 0% 25%;
-  --scrollbar-track: 0 0% 10%;
-  --scrollbar-hover: 0 0% 35%;
+  --scrollbar-thumb: 345 83% 35%;
+  --scrollbar-track: 0 40% 8%;
+  --scrollbar-hover: 345 83% 25%;
 
   /* Custom named colors (same as light, but can be overridden if needed) */
   --greedy: #07eae6ff;
